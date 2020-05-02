@@ -1,3 +1,80 @@
 from django.shortcuts import render
+from .models import Author, Book, PublishingHouse, IssueCity, KeyWord, BBK
+from rest_framework.viewsets import ModelViewSet
+from .serializers import BookSerializer, AuthorSerializer, PublishingHouseSerializer, BBKSerializer, KeyWordSerializer
+from rest_framework.response import Response
 
 # Create your views here.
+
+class BookViewSet(ModelViewSet):
+    queryset = Book.objects.all().order_by('author__lname')
+    serializer_class = BookSerializer
+    filterset_fields = ['bbk__code', 'author_sign', 'publishing_house__name']
+    search_fields = ['author__name', 'name', 'issue_year', 'key_word__name']
+
+    def post(self, request):
+        key_words = request.data.pop('key_words')
+        authors = request.data.pop('author')
+        bbks = request.data.pop('bbk')
+        publishing_house = PublishingHouse.objects.get(pk=request.data.pop('publishing_house'))
+        issue_city = IssueCity.objects.get(pk=request.data.pop('issue_city'))
+
+        serializer = BookSerializer(data=request.data)
+        serializer.is_valid()
+        book = Book.objects.create(**serializer.validated_data)
+
+        for key_word in key_words:
+            if 'id' in key_word:
+                key_word_to_assign = KeyWord.objects.get(pk=key_word['id'])
+            elif 'name' in key_word:
+                key_word_to_assign = KeyWord.objects.create(name=key_word['name'])
+                key_word_to_assign.save()
+            book.key_word.add(key_word_to_assign)
+
+        for author in authors:
+            author_to_assign = Author.objects.get(pk=author['id'])
+            book.author.add(author_to_assign)
+
+        for bbk in bbks:
+            bbk_to_assign = BBK.objects.get(pk=bbk['id'])
+            book.bbk.add(bbk_to_assign)
+
+        book.publishing_house = publishing_house
+        book.issue_city = issue_city
+
+        book.save()
+
+        return Response(BookSerializer(book).data)
+
+
+class AuthorViewSet(ModelViewSet):
+    queryset = Author.objects.all().order_by('lname')
+    serializer_class = AuthorSerializer
+    filterset_fields = ['lname']
+
+    def post(self, request):
+        serializer = AuthorSerializer(data=request.data)
+        serializer.is_valid()
+        author = Author.objects.create(**serializer.validated_data)
+        initial_name = author.lname + ' ' + author.fname[0].upper()
+        if author.mname is not None:
+            initial_name += ' ' + author.mname[0].upper()
+        author.short_name = initial_name
+        author.save()
+
+        return Response(AuthorSerializer(author).data)
+
+
+class PublishingHouseViewSet(ModelViewSet):
+    queryset = PublishingHouse.objects.all()
+    serializer_class = PublishingHouseSerializer
+
+
+class BBKViewSet(ModelViewSet):
+    queryset = BBK.objects.all()
+    serializer_class = BBKSerializer
+
+
+class KeyWordViewSet(ModelViewSet):
+    queryset = KeyWord.objects.all()
+    serializer_class = KeyWordSerializer
