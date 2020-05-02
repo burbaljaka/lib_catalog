@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from .models import Author, Book, PublishingHouse, IssueCity, KeyWord, BBK
 from rest_framework.viewsets import ModelViewSet
-from .serializers import BookSerializer, AuthorSerializer, PublishingHouseSerializer, BBKSerializer, KeyWordSerializer
+from .serializers import BookSerializer, AuthorSerializer, PublishingHouseSerializer, BBKSerializer, KeyWordSerializer, \
+    IssueCitySerializer
 from rest_framework.response import Response
 
 # Create your views here.
@@ -29,7 +30,7 @@ class BookViewSet(ModelViewSet):
             elif 'name' in key_word:
                 key_word_to_assign = KeyWord.objects.create(name=key_word['name'])
                 key_word_to_assign.save()
-            book.key_word.add(key_word_to_assign)
+            book.keywords.add(key_word_to_assign)
 
         for author in authors:
             author_to_assign = Author.objects.get(pk=author['id'])
@@ -52,15 +53,17 @@ class AuthorViewSet(ModelViewSet):
     serializer_class = AuthorSerializer
     filterset_fields = ['lname']
 
-    def post(self, request):
+    def create(self, request, *args, **kwargs):
         serializer = AuthorSerializer(data=request.data)
         serializer.is_valid()
         author = Author.objects.create(**serializer.validated_data)
-        initial_name = author.lname + ' ' + author.fname[0].upper()
+        author.save()
+        initial_name = author.lname + ' ' + author.fname[0].upper() + '.'
         if author.mname is not None:
-            initial_name += ' ' + author.mname[0].upper()
+            initial_name += author.mname[0].upper() + '.'
         author.short_name = initial_name
         author.save()
+
 
         return Response(AuthorSerializer(author).data)
 
@@ -78,3 +81,8 @@ class BBKViewSet(ModelViewSet):
 class KeyWordViewSet(ModelViewSet):
     queryset = KeyWord.objects.all()
     serializer_class = KeyWordSerializer
+
+
+class IssueCityViewSet(ModelViewSet):
+    queryset = IssueCity.objects.all()
+    serializer_class = IssueCitySerializer
