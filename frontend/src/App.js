@@ -1,95 +1,41 @@
-import React from 'react';
-import './App.css';
+import React, { Component } from 'react'
+import { BrowserRouter } from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
+import AuthorList from './AuthorList'
+import AuthorCreateUpdate from './AuthorCreateUpdate'
+import './App.css'
 
-// class App extends React.Component{
-//   constructor(props){
-//     super(props);
-//     this.state = {
-//       bookList:[],
-//       activeItem:{
-//         id:null,
-//         name:'',
-//         authors:[],
-//         bbks:[],
-//         author_sign:'',
-//         issue_year:'',
-//         keywords:[],
-//         descriprion:'',
-//         issue_city:'',
-//         publishing_house:'',
-//         place:'',
-//         pages:'',
-//       }
-//       // this.fetchBooks
-//     }
-//   };
-//
-//   fetchBooks(){
-//     fetch('http:127.0.0.1:8000/api/v1/lib/book/')
-//     .then(response => response.json())
-//     .then(data =>
-//       this.setState({bookList:data}))
-//   }
-// }
-//
-// render{
-//   return(
-//     <div className="container">
-//       <div id="list-wrapper">
-//
-//       </div>
-//     </div>
-//   )
-// }
+const BaseLayout = () => (
+  <div className="container-fluid">
+    <nav  className="navbar navbar-expand-lg navbar-light bg-light">
+    <a  className="navbar-brand" href="">Авторы</a>
+    <button  className="navbar-toggler" type="button"  data-toggle="collapse"  data-target="#navbarNavAltMarkup"  aria-controls="navbarNavAltMarkup"  aria-expanded="false"  aria-label="Toggle navigation">
+    <span  className="navbar-toggler-icon"></span>
+    </button>
+    <div  className="collapse navbar-collapse"  id="navbarNavAltMarkup">
+       <div  className="navbar-nav">
+           <a  className="nav-item nav-link" href="/">Авторы</a>
+           <a  className="nav-item nav-link" href="/author">Создать автора</a>
+       </div>
+    </div>
+    </nav>
 
-class App extends React.Component{
-  constructor(props){
-    super(props);
-    this.state = {
-      authorList:[],
-      activeItem:{
-        id:null,
-        short_name: '',
-      }
-    }
-      this.fetchAuthors = this.fetchAuthors.bind(this)
-  };
+   <div className="content">
+      <Route path="/" exact component={AuthorList} />
+      <Route path="/author/:pk" exact component={AuthorCreateUpdate} />
+      <Route path="/author/" exact component={AuthorCreateUpdate} />
 
-  componentDidMount(){
-    this.fetchAuthors()
-  }
+   </div>
+  </div>
+)
 
-  fetchAuthors(){
-    console.log('Fetching...');
-    fetch('http://127.0.0.1:8000/api/v1/lib/author/')
-    .then(response => response.json())
-    .then(data =>
-      this.setState({authorList:data}))
-  }
-
-  render(){
-    var authors = this.state.authorList
-    return(
-      <div className="container">
-        <div id="author-container">
-          <div id="list-wrapper">
-            {authors.map(function(author, index){
-              return(
-                <div key={index} className="item-wrapper flex-wrapper">
-                  <div style={{flex:10}}>
-                    <span>Имя для отображения в списках: {author.short_name}</span>
-                  </div>
-                  <div style={{flex:10}}>
-                    <span>Полное имя: {author.lname} {author.fname} {author.mname}</span>
-                  </div>
-                </div>
-              )
-            })}
-          </div>
-        </div>
-      </div>
-    )
+class App extends Component {
+  render() {
+    return (
+      <BrowserRouter>
+        <BaseLayout/>
+      </BrowserRouter>
+    );
   }
 }
-
 export default App;
