@@ -5,6 +5,8 @@ import AuthorList from './AuthorList'
 import AuthorCreateUpdate from './AuthorCreateUpdate'
 import CityList from './CityList'
 import CityCreateUpdate from './CityCreateUpdate'
+import PubList from './PubList'
+import PubCreateUpdate from './PubCreateUpdate'
 import './App.css'
 
 const BaseLayout = () => (
@@ -18,9 +20,10 @@ const BaseLayout = () => (
     <div className="collapse navbar-collapse"  id="navbarNavAltMarkup">
        <div className="navbar-nav">
            <a className="nav-item nav-link" href="/authors/">Авторы</a>
-
            <a className="nav-item nav-link" href="/cities/">Города</a>
-           
+           <a className="nav-item nav-link" href="/pubs/">Издательства</a>
+
+
        </div>
     </div>
     </nav>
@@ -32,6 +35,9 @@ const BaseLayout = () => (
       <Route path="/cities/" exact component={CityList} />
       <Route path="/cities/manage/:pk" exact component={CityCreateUpdate} />
       <Route path="/cities/manage/" exact component={CityCreateUpdate} />
+      <Route path="/pubs/" exact component={PubList} />
+      <Route path="/pubs/manage/:pk" exact component={PubCreateUpdate} />
+      <Route path="/pubs/manage/" exact component={PubCreateUpdate} />
 
    </div>
   </div>

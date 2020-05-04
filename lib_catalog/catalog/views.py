@@ -28,8 +28,14 @@ class BookViewSet(ModelViewSet):
             if 'id' in key_word:
                 key_word_to_assign = KeyWord.objects.get(pk=key_word['id'])
             elif 'name' in key_word:
-                key_word_to_assign = KeyWord.objects.create(name=key_word['name'])
-                key_word_to_assign.save()
+                list_names = KeyWord.objects.filter(name=key_word['name'])
+
+                if len(list_names) > 0:
+                    key_word_to_assign = KeyWord.objects.get(pk=key_word['id'])
+                else:
+                    key_word_to_assign = KeyWord.objects.create(name=key_word['name'])
+                    key_word_to_assign.save()
+
             book.keywords.add(key_word_to_assign)
 
         for author in authors:
