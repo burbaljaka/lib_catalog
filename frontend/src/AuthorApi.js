@@ -3,8 +3,6 @@ const API_URL = 'http://localhost:8000/api/v1/lib/author/';
 
 export default class AuthorManager {
 
-  constructor () {}
-
   getAuthors(){
     return axios.get(API_URL).then(response => response.data);
   }

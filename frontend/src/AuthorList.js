@@ -16,7 +16,6 @@ class AuthorList extends Component {
   componentDidMount() {
     var self = this;
     authorManager.getAuthors().then(function(result) {
-      console.log(result);
       self.setState({authors: result});
     });
   }
@@ -34,6 +33,7 @@ class AuthorList extends Component {
   render() {
     var self = this
     return (
+      <div className="container">
       <div className="authors--list">
         <table className="table">
           <thead key="thead">
@@ -41,6 +41,8 @@ class AuthorList extends Component {
             <th>#</th>
             <th>Имя</th>
             <th>Авторский знак</th>
+            <th>Действия</th>
+            <th><a className="nav-item nav-link" href="/authors/manage/">Создать автора</a></th>
           </tr>
           </thead>
           <tbody>
@@ -51,7 +53,7 @@ class AuthorList extends Component {
                   <td>{a.lname} {a.fname} {a.mname}</td>
                   <td>{a.author_code}</td>
                   <td>
-                    <a href={"/author/" + a.id} className="btn btn-sm btn-outline-light delete">Изменить</a>
+                    <a href={"/authors/manage/" + a.id} className="btn btn-sm btn-outline-light delete">Изменить</a>
                     <button onClick={()=> self.handleDelete(a)} className="btn btn-sm btn-outline-light delete">Удалить</button>
                   </td>
                 </tr>
@@ -60,6 +62,7 @@ class AuthorList extends Component {
             )}
           </tbody>
         </table>
+      </div>
       </div>
     );
   }

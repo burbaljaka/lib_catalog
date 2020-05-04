@@ -59,8 +59,10 @@ class AuthorViewSet(ModelViewSet):
         author = Author.objects.create(**serializer.validated_data)
         author.save()
         initial_name = author.lname + ' ' + author.fname[0].upper() + '.'
+
         if author.mname is not None:
             initial_name += author.mname[0].upper() + '.'
+
         author.short_name = initial_name
         author.save()
 

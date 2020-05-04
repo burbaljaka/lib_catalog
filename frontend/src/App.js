@@ -1,29 +1,37 @@
 import React, { Component } from 'react'
 import { BrowserRouter } from 'react-router-dom'
-import { Route, Link } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import AuthorList from './AuthorList'
 import AuthorCreateUpdate from './AuthorCreateUpdate'
+import CityList from './CityList'
+import CityCreateUpdate from './CityCreateUpdate'
 import './App.css'
 
 const BaseLayout = () => (
   <div className="container-fluid">
-    <nav  className="navbar navbar-expand-lg navbar-light bg-light">
-    <a  className="navbar-brand" href="">Авторы</a>
-    <button  className="navbar-toggler" type="button"  data-toggle="collapse"  data-target="#navbarNavAltMarkup"  aria-controls="navbarNavAltMarkup"  aria-expanded="false"  aria-label="Toggle navigation">
-    <span  className="navbar-toggler-icon"></span>
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+    <a className="navbar-brand" href="/authors/">Авторы</a>
+
+    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"  aria-controls="navbarNavAltMarkup"  aria-expanded="false"  aria-label="Toggle navigation">
+    <span className="navbar-toggler-icon"></span>
     </button>
-    <div  className="collapse navbar-collapse"  id="navbarNavAltMarkup">
-       <div  className="navbar-nav">
-           <a  className="nav-item nav-link" href="/">Авторы</a>
-           <a  className="nav-item nav-link" href="/author">Создать автора</a>
+    <div className="collapse navbar-collapse"  id="navbarNavAltMarkup">
+       <div className="navbar-nav">
+           <a className="nav-item nav-link" href="/authors/">Авторы</a>
+
+           <a className="nav-item nav-link" href="/cities/">Города</a>
+           
        </div>
     </div>
     </nav>
 
    <div className="content">
-      <Route path="/" exact component={AuthorList} />
-      <Route path="/author/:pk" exact component={AuthorCreateUpdate} />
-      <Route path="/author/" exact component={AuthorCreateUpdate} />
+      <Route path="/authors/" exact component={AuthorList} />
+      <Route path="/authors/manage/:pk" exact component={AuthorCreateUpdate} />
+      <Route path="/authors/manage/" exact component={AuthorCreateUpdate} />
+      <Route path="/cities/" exact component={CityList} />
+      <Route path="/cities/manage/:pk" exact component={CityCreateUpdate} />
+      <Route path="/cities/manage/" exact component={CityCreateUpdate} />
 
    </div>
   </div>

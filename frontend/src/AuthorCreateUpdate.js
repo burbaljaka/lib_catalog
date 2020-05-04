@@ -21,7 +21,6 @@ class AuthorCreateUpdate extends Component {
     const {match: {params}} = this.props;
     if(params && params.pk) {
       authorManager.getAuthor(params.pk).then((a)=>{
-        console.log(a);
         this.setState({
           fname:a.fname,
           mname:a.mname,
@@ -47,7 +46,6 @@ class AuthorCreateUpdate extends Component {
   }
 
   handleCreate(){
-    console.log(this.state.activeItem);
     authorManager.createAuthor({
       "fname": this.state.fname,
       "mname": this.state.mname,
@@ -75,38 +73,11 @@ class AuthorCreateUpdate extends Component {
     this.setState({
         [e.target.id]:e.target.value
       })
-    // if (e.target.id === 'lname'){
-    //   this.setState({
-    //     activeItem:{
-    //       ...this.setState.activeItem,
-    //       lname:e.target.value
-    //     }});
-    // };
-    // if (e.target.id === 'mname') {
-    //   this.setState({
-    //     activeItem:{
-    //       ...this.setState.activeItem,
-    //       mname:e.target.value
-    //     }})
-    // };
-    // if (e.target.id === 'lname') {
-    //   this.setState({
-    //     activeItem:{
-    //       ...this.setState.activeItem,
-    //       lname:e.target.value
-    //     }})
-    // };
-    // if (e.target.id === 'author_code') {
-    //   this.setState({
-    //     activeItem:{
-    //       ...this.setState.activeItem,
-    //       author_code:e.target.value
-    //     }})
-    // }
   }
 
   render() {
     return (
+      <div className="container">
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
           <label>Фамилия</label>
@@ -125,6 +96,7 @@ class AuthorCreateUpdate extends Component {
 
         </div>
       </form>
+      </div>
     );
   }
 
