@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { Route } from 'react-router-dom'
 import AuthorList from './AuthorList'
 import AuthorCreateUpdate from './AuthorCreateUpdate'
+import BookList from './BookList'
 import CityList from './CityList'
 import CityCreateUpdate from './CityCreateUpdate'
 import PubList from './PubList'
@@ -12,7 +13,7 @@ import './App.css'
 const BaseLayout = () => (
   <div className="container-fluid">
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-    <a className="navbar-brand" href="/authors/">Авторы</a>
+    <a className="navbar-brand" href="/">Список книг</a>
 
     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"  aria-controls="navbarNavAltMarkup"  aria-expanded="false"  aria-label="Toggle navigation">
     <span className="navbar-toggler-icon"></span>
@@ -29,6 +30,7 @@ const BaseLayout = () => (
     </nav>
 
    <div className="content">
+      <Route path="/" exact component={BookList} />
       <Route path="/authors/" exact component={AuthorList} />
       <Route path="/authors/manage/:pk" exact component={AuthorCreateUpdate} />
       <Route path="/authors/manage/" exact component={AuthorCreateUpdate} />

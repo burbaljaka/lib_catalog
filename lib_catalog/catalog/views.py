@@ -8,7 +8,7 @@ from rest_framework.response import Response
 # Create your views here.
 
 class BookViewSet(ModelViewSet):
-    queryset = Book.objects.all().order_by('author__lname')
+    queryset = Book.objects.all().order_by('name')
     serializer_class = BookSerializer
     filterset_fields = ['bbk__code', 'author_sign', 'publishing_house__name']
     search_fields = ['author__name', 'name', 'issue_year', 'key_word__name']
@@ -23,6 +23,7 @@ class BookViewSet(ModelViewSet):
         serializer = BookSerializer(data=request.data)
         serializer.is_valid()
         book = Book.objects.create(**serializer.validated_data)
+        book.author_sign = Author.objects.get(pk=authors[0]['id']).author_code
 
         for key_word in key_words:
             if 'id' in key_word:

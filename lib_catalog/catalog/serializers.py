@@ -35,10 +35,10 @@ class BBKSerializer(serializers.ModelSerializer):
 
 class BookSerializer(serializers.ModelSerializer):
 
-    author = AuthorSerializer(read_only=True)
+    author = AuthorSerializer(read_only=True, many=True)
     publishing_house = PublishingHouseSerializer(read_only=True)
     issue_city = IssueCitySerializer(read_only=True)
-    key_word = KeyWordSerializer(read_only=True, many=True)
+    keywords = KeyWordSerializer(read_only=True, many=True)
     bbk = BBKSerializer(read_only=True, many=True)
 
     class Meta:
