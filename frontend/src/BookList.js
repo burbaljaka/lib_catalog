@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import BookManager from './BookApi';
 
+
 const bookManager = new BookManager();
 
 class BookList extends Component {
@@ -16,7 +17,6 @@ class BookList extends Component {
   componentDidMount() {
     var self = this;
     bookManager.getBooks().then(function(result) {
-      console.log('result', result);
       self.setState({books: result});
     });
   }
@@ -38,7 +38,7 @@ class BookList extends Component {
       <div className="books--list">
         <table className="table">
           <thead key="thead">
-          <tr>
+          <tr >
             <th>#</th>
             <th>Название</th>
             <th>Автор</th>
@@ -59,6 +59,7 @@ class BookList extends Component {
                   <td>{b.name}</td>
                   <td>{b.issue_year}</td>
                   <td>
+                    <a href={"/books/card/" + b.id} className="btn btn-sm btn-outline-light delete">Просмотреть карточку</a>
                     <a href={"/books/manage/" + b.id} className="btn btn-sm btn-outline-light delete">Изменить</a>
                     <button onClick={()=> self.handleDelete(b)} className="btn btn-sm btn-outline-light delete">Удалить</button>
                   </td>

@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom'
 import AuthorList from './AuthorList'
 import AuthorCreateUpdate from './AuthorCreateUpdate'
 import BookList from './BookList'
+import BookCard from './BookCard'
 import CityList from './CityList'
 import CityCreateUpdate from './CityCreateUpdate'
 import PubList from './PubList'
@@ -31,6 +32,7 @@ const BaseLayout = () => (
 
    <div className="content">
       <Route path="/" exact component={BookList} />
+      <Route path="/books/card/:pk" exact component={BookCard} />
       <Route path="/authors/" exact component={AuthorList} />
       <Route path="/authors/manage/:pk" exact component={AuthorCreateUpdate} />
       <Route path="/authors/manage/" exact component={AuthorCreateUpdate} />
