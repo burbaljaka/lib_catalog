@@ -18,7 +18,7 @@ export default class BookManager {
     return axios.patch(url,book)
   }
   deleteBook(book){
-    const url = API_URL + book.id + '/';
+    const url = API_URL + book + '/';
     return axios.delete(url)
   }
 }

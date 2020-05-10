@@ -10,8 +10,7 @@ class BookList extends Component {
     super(props);
     this.state = {
       books:[],
-    };
-    this.handleDelete = this.handleDelete.bind(this);
+    }
   };
 
   componentDidMount() {
@@ -21,15 +20,7 @@ class BookList extends Component {
     });
   }
 
-  handleDelete(book) {
-    var self = this;
-    bookManager.deleteBook(book).then(()=>{
-      var newArr = self.state.books.filter(function(obj){
-        return obj.id !== book.id;
-      });
-      self.setState({books: newArr})
-    });
-  }
+
 
   render() {
     var self = this
@@ -40,8 +31,8 @@ class BookList extends Component {
           <thead key="thead">
           <tr >
             <th>#</th>
-            <th>Название</th>
             <th>Автор</th>
+            <th>Название</th>
             <th>Год издания</th>
             <th>Действия</th>
             <th><a className="nav-item nav-link" href="/books/manage/">Создать книгу</a></th>
@@ -60,8 +51,6 @@ class BookList extends Component {
                   <td>{b.issue_year}</td>
                   <td>
                     <a href={"/books/card/" + b.id} className="btn btn-sm btn-outline-light delete">Просмотреть карточку</a>
-                    <a href={"/books/manage/" + b.id} className="btn btn-sm btn-outline-light delete">Изменить</a>
-                    <button onClick={()=> self.handleDelete(b)} className="btn btn-sm btn-outline-light delete">Удалить</button>
                   </td>
                 </tr>
               )

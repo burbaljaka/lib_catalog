@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import BookManager from './BookApi';
+import { Redirect } from "react-router-dom";
 
 const bookManager = new BookManager();
 
@@ -14,7 +15,19 @@ class BookCard extends Component {
       author_sign: '',
       keywords: [],
       description: '',
-      place: ''
+      place: '',
+      redirect: false
+    };
+    this.handleDelete = this.handleDelete.bind(this);
+  }
+
+  handleDelete(book) {
+    var self = this;
+    const {match: {params}} = this.props;
+    if(params && params.pk) {
+      bookManager.deleteBook(params.pk).then(()=>{
+        this.setState({redirect:true})
+      })
     }
   }
 
@@ -37,9 +50,21 @@ class BookCard extends Component {
   }
 
   render() {
+    var self = this
+    if (this.state.redirect === true) {
+      return <Redirect to='/' />
+    }
     return (
       <div className="container">
           <div className="book-card">
+          <div className="row justify-content-end">
+            <div className="col-1">
+              <a href={"/books/manage/" + this.state.id} className="btn btn-sm btn-outline-light delete">Изменить</a>
+            </div>
+            <div className="col-1">
+              <button onClick={()=> self.handleDelete(this.props.pk)} className="btn btn-sm btn-outline-light delete">Удалить</button>
+            </div>
+          </div>
               <table className="table">
               <tbody>
                   <tr>
