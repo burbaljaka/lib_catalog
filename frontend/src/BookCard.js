@@ -16,7 +16,13 @@ class BookCard extends Component {
       keywords: [],
       description: '',
       place: '',
-      redirect: false
+      additional_data: '',
+      series: '',
+      issue_city: {},
+      publishing_house: {},
+      issue_year: '',
+      pages: '',
+      redirect: false,
     };
     this.handleDelete = this.handleDelete.bind(this);
   }
@@ -35,15 +41,21 @@ class BookCard extends Component {
     const {match: {params}} = this.props;
     if(params && params.pk) {
       bookManager.getBook(params.pk).then((a)=>{
-        console.log(a);
         this.setState({
+          id:params.pk,
           name:a.name,
           bbk:a.bbk,
           authors:a.author,
           author_sign: a.author_sign,
           keywords: a.keywords,
           description: a.description,
-          place: a.place
+          place: a.place,
+          additional_data: a.additional_data,
+          series: a.series,
+          issue_city: a.issue_city,
+          publishing_house: a.publishing_house,
+          issue_year: a.issue_year,
+          pages: a.pages
         })
       })
     }
@@ -59,7 +71,7 @@ class BookCard extends Component {
           <div className="book-card">
           <div className="row justify-content-end">
             <div className="col-1">
-              <a href={"/books/manage/" + this.state.id} className="btn btn-sm btn-outline-light delete">Изменить</a>
+              <a href={"/books/manage/" + this.props.match.params.pk} className="btn btn-sm btn-outline-light delete">Изменить</a>
             </div>
             <div className="col-1">
               <button onClick={()=> self.handleDelete(this.props.pk)} className="btn btn-sm btn-outline-light delete">Удалить</button>
@@ -86,7 +98,7 @@ class BookCard extends Component {
                   </tr>
                   <tr>
                       <td></td>
-                      <td>{this.state.name}</td>
+                      <td>{self.state.name} / {self.state.additional_data} - {self.state.issue_city.name}: {self.state.publishing_house.name}, {self.state.issue_year}. - {self.state.pages} - {self.state.series}</td>
                   </tr>
                   <tr>
                       <td></td>
