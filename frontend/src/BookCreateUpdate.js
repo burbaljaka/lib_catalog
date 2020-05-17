@@ -44,6 +44,8 @@ class BookCreateUpdate extends Component {
   }
 
   componentDidMount(){
+    cityManager.getCities().then(function(result) {
+      self.setState({cities:result})});
     const {match: {params}} = this.props;
     let self = this;
     if(params && params.pk) {
@@ -66,9 +68,8 @@ class BookCreateUpdate extends Component {
           publishing_house: a.publishing_house,
         })
       });
-      cityManager.getCities().then(function(result) {
-        self.setState({cities:result})
-      });
+
+      ;
     }
   }
 
@@ -86,7 +87,6 @@ class BookCreateUpdate extends Component {
       "publishing_house": this.state.publishing_house,
       "place": this.state.currentBook.place,
     }).then((result)=>{
-      console.log(result);
         alert("Книга отредактирована!");
       }).catch(()=>{
         alert("Ошибка! Проверь форму!");
@@ -143,7 +143,6 @@ class BookCreateUpdate extends Component {
 
   render() {
     var self = this;
-    console.log(this.state);
     return (
       <div className="container">
       <form onSubmit={this.handleSubmit}>
