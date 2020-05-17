@@ -55,7 +55,9 @@ class Book(models.Model):
     place = models.CharField(max_length=200, blank=True, null=True)
     # picture = models.CharField()
     # file = models.FileField(upload_to='', blank=True, null=True )
-    pages = models.IntegerField(blank=True, null=True)
+    pages = models.CharField(max_length=200, blank=True, null=True)
+    additional_data = models.CharField(max_length=200, blank=True, null=True)
+    series = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
         return self.name

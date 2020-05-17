@@ -11,6 +11,7 @@ import CityCreateUpdate from './CityCreateUpdate'
 import PubList from './PubList'
 import PubCreateUpdate from './PubCreateUpdate'
 import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const BaseLayout = () => (
   <div className="container-fluid">
