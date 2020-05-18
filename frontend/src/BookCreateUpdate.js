@@ -1,12 +1,57 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import BookManager from './BookApi';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
 import BBKManager from './BBKApi';
 import CityManager from './CitiesApi';
+import PubManager from './PubApi';
 
 const bookManager = new BookManager();
 const bbkManager = new BBKManager();
 const cityManager = new CityManager();
+const pubManager = new PubManager();
+
+const CustomMenu = React.forwardRef(
+  ({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
+    const [value, setValue] = useState('');
+
+    return (
+      <div
+        ref={ref}
+        style={style}
+        className={className}
+        aria-labelledby={labeledBy}
+      >
+        <input
+          autoFocus
+          className="mx-3 my-2 w-auto"
+          placeholder="Type to filter..."
+          onChange={(e) => setValue(e.target.value)}
+          value={value}
+        />
+        <ul className="list-unstyled">
+          {React.Children.toArray(children).filter(
+            (child) =>
+              !value || child.props.children.toLowerCase().includes(value.toLowerCase()),
+          )}
+        </ul>
+      </div>
+    );
+  },
+);
+
+const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+  <button
+    className="btn btn-sm btn-outline-light delete"
+    ref={ref}
+    onClick={(e) => {
+      e.preventDefault();
+      onClick(e);
+    }}
+  >
+    {children}
+    &#x25bc;
+  </button>
+));
 
 class BookCreateUpdate extends Component {
   constructor(props) {
@@ -27,6 +72,7 @@ class BookCreateUpdate extends Component {
         pages: '',
       },
       cities:[],
+      publishing_houses:[],
       issue_city: {
         id:null,
         name:''
@@ -35,17 +81,21 @@ class BookCreateUpdate extends Component {
         id:null,
         name:''
       },
+      new_city: '',
       redirect: false
       };
     // добавить для получения списков данных
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleCitiesDropdown = this.handleCitiesDropdown.bind(this);
+    this.handleHouseDropdown = this.handleHouseDropdown.bind(this);
   }
 
   componentDidMount(){
     cityManager.getCities().then(function(result) {
       self.setState({cities:result})});
+    pubManager.getPubs().then(function(result) {
+      self.setState({publishing_houses:result})});
     const {match: {params}} = this.props;
     let self = this;
     if(params && params.pk) {
@@ -132,14 +182,28 @@ class BookCreateUpdate extends Component {
   }
 
   handleCitiesDropdown(e){
+    console.log(e.target);
     this.setState({
         issue_city:{
-          name:e.target.text,
+          name:e.target.innerText,
           id: e.target.id
         }
       }
     );
   }
+
+  handleHouseDropdown(e){
+    console.log(e.target);
+    this.setState({
+        publishing_house:{
+          name:e.target.innerText,
+          id: e.target.id
+        }
+      }
+    );
+  }
+
+
 
   render() {
     var self = this;
@@ -157,7 +221,7 @@ class BookCreateUpdate extends Component {
           <input className="form-control" id="issue_year" type="text" value={this.state.currentBook.issue_year} onChange={this.handleChange}/>
 
           <label>Описание</label>
-          <input className="form-control" id="description" type="text" value={this.state.currentBook.description} onChange={this.handleChange}/>
+          <textarea className="form-control" id="description" rows="7" type="text" value={this.state.currentBook.description} onChange={this.handleChange}/>
 
           <label>Расположение</label>
           <input className="form-control" id="place" type="text" value={this.state.currentBook.place} onChange={this.handleChange}/>
@@ -166,17 +230,38 @@ class BookCreateUpdate extends Component {
           <input className="form-control" id="pages" type="text" value={this.state.currentBook.pages} onChange={this.handleChange}/>
 
           <div className="row justify-content-end">
-
             <div className="col-8">
-
               <label>Город издательства: <strong>{this.state.issue_city.name}</strong></label>
             </div>
             <div className="col-4">
-              <DropdownButton title="Город издательства">
+            <Dropdown>
+              <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
+                Выбрать город издательства
+              </Dropdown.Toggle>
+              <Dropdown.Menu as={CustomMenu}>
                 {this.state.cities.map(function(c){
-                  return (<Dropdown.Item id={c.id} onClick={self.handleCitiesDropdown}>{c.name}</Dropdown.Item>)
+                  return <Dropdown.Item eventKey={c.id} id={c.id} onClick={self.handleCitiesDropdown}>{c.name}</Dropdown.Item>
                 })}
-              </DropdownButton>
+              </Dropdown.Menu>
+            </Dropdown>
+            </div>
+          </div>
+          <div className="row justify-content-end">
+            <div className="col-8">
+              <label>Издательство: <strong>{this.state.publishing_house.name}</strong></label>
+            </div>
+
+          <div className="col-4">
+            <Dropdown>
+              <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
+                Выбрать издательство
+              </Dropdown.Toggle>
+              <Dropdown.Menu as={CustomMenu}>
+                {this.state.publishing_houses.map(function(c){
+                  return <Dropdown.Item eventKey={c.id} id={c.id} onClick={self.handleHouseDropdown}>{c.name}</Dropdown.Item>
+                })}
+              </Dropdown.Menu>
+            </Dropdown>
             </div>
           </div>
 
