@@ -105,10 +105,14 @@ class BookCard extends Component {
                       <td>{this.state.description}</td>
                   </tr>
                   <tr>
-                      <td>{this.state.place}</td>
-                      <td>{this.state.keywords.map(function(w){
+                    <td>{this.state.place}</td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                     <td></td>
+                     <td>{this.state.keywords.map(function(w){
                         return (
-                          <span>{w.name}</span>
+                          <span>{w.name}, </span>
                         )
                       })}</td>
                   </tr>

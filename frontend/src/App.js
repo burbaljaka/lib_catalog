@@ -10,6 +10,10 @@ import CityList from './CityList'
 import CityCreateUpdate from './CityCreateUpdate'
 import PubList from './PubList'
 import PubCreateUpdate from './PubCreateUpdate'
+import BBKList from './BBKList'
+import BBKCreateUpdate from './BBKCreateUpdate'
+import KeyWordList from './KeyWordList'
+import KeyWordCreateUpdate from './KeyWordCreateUpdate'
 import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -26,6 +30,8 @@ const BaseLayout = () => (
            <a className="nav-item nav-link" href="/authors/">Авторы</a>
            <a className="nav-item nav-link" href="/cities/">Города</a>
            <a className="nav-item nav-link" href="/pubs/">Издательства</a>
+           <a className="nav-item nav-link" href="/bbks/">Коды ББК</a>
+           <a className="nav-item nav-link" href="/key_words/">Ключевые слова</a>
 
 
        </div>
@@ -46,7 +52,12 @@ const BaseLayout = () => (
       <Route path="/pubs/" exact component={PubList} />
       <Route path="/pubs/manage/:pk" exact component={PubCreateUpdate} />
       <Route path="/pubs/manage/" exact component={PubCreateUpdate} />
-
+      <Route path="/bbks/" exact component={BBKList} />
+      <Route path="/bbks/manage/" exact component={BBKCreateUpdate} />
+      <Route path="/bbks/manage/:pk" exact component={BBKCreateUpdate} />
+      <Route path="/key_words/" exact component={KeyWordList} />
+      <Route path="/key_words/manage/" exact component={KeyWordCreateUpdate} />
+      <Route path="/key_words/manage/:pk" exact component={KeyWordCreateUpdate} />
    </div>
   </div>
 )
