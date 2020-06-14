@@ -75,6 +75,8 @@ class AuthorCreateUpdate extends Component {
       })
   }
 
+
+
   render() {
     return (
       <div className="container">
@@ -89,13 +91,15 @@ class AuthorCreateUpdate extends Component {
           <label>Отчество</label>
           <input className="form-control" id="mname" type="text" value={this.state.mname} onChange={this.handleChange}/>
 
-          <label>Код автора</label>
+          <label>Авторский знак</label>
           <input className="form-control" id="author_code" type="text" value={this.state.author_code} onChange={this.handleChange}/>
 
           <input className="btn btn-primary" type="submit" value="Сохранить"/>
 
+
         </div>
       </form>
+      <a href="http://lib.sportedu.ru/HAVkina1.idc" style={{color: 'black'}}>Таблицы авторских знаков</a>
       </div>
     );
   }
