@@ -23,4 +23,4 @@ services:
         depends_on:
             - "web"
         command:
-            yarn start
+            npm start
