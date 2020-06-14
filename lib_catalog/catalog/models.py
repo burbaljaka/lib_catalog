@@ -4,7 +4,6 @@ from django.db import models
 
 class Author(models.Model):
     fname = models.CharField(max_length=200)
-    mname = models.CharField(max_length=200, blank=True, null=True)
     lname = models.CharField(max_length=200)
     short_name = models.CharField(max_length=200, blank=True, null=True)
     author_code = models.CharField(max_length=200, blank=True, null=True)

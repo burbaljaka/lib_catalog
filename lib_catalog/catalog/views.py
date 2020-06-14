@@ -16,8 +16,8 @@ class BookViewSet(ModelViewSet):
     def perform_update(self, serializer):
         book = serializer.save()
 
-        if 'key_words' in self.request.data:
-            key_words = self.request.data.pop('key_words')
+        if 'keywords' in self.request.data:
+            key_words = self.request.data.pop('keywords')
             book.keywords.clear()
             for key_word in key_words:
                 if 'id' in key_word:
@@ -33,9 +33,9 @@ class BookViewSet(ModelViewSet):
 
                 book.keywords.add(key_word_to_assign)
 
-        if 'bbks' in self.request.data:
+        if 'bbk' in self.request.data:
             book.bbk.clear()
-            for bbk in self.request.data['bbks']:
+            for bbk in self.request.data['bbk']:
                 bbk_to_assign = BBK.objects.get(pk=bbk['id'])
                 book.bbk.add(bbk_to_assign)
 
@@ -54,48 +54,46 @@ class BookViewSet(ModelViewSet):
         book.save()
 
     def create(self, request):
-        print(request)
-        key_words = request.data.pop('keywords')
-        authors = request.data.pop('author')
-        bbks = request.data.pop('bbk')
-        publishing_house = PublishingHouse.objects.get(pk=request.data.pop('publishing_house')['id'])
-        issue_city = IssueCity.objects.get(pk=request.data.pop('issue_city')['id'])
-
         serializer = BookSerializer(data=request.data)
         serializer.is_valid()
         book = Book(**serializer.validated_data)
-        if not 'author_sign' in request.data:
-            book.author_sign = Author.objects.get(pk=authors[0]['id']).author_code
         book.save()
+        bbks = request.data.pop('bbk')
 
-        for key_word in key_words:
-            if 'id' in key_word:
-                key_word_to_assign = KeyWord.objects.get(pk=key_word['id'])
-            elif 'name' in key_word:
-                list_names = KeyWord.objects.filter(name=key_word['name'])
+        if 'publishing_house' in request.data:
+            publishing_house = PublishingHouse.objects.get(pk=request.data.pop('publishing_house')['id'])
+            book.publishing_house = publishing_house
 
-                if len(list_names) > 0:
+        if 'issue_city' in request.data:
+            issue_city = IssueCity.objects.get(pk=request.data.pop('issue_city')['id'])
+            book.issue_city = issue_city
+
+        if request.data['author_sign'] == '':
+            book.author_sign = Author.objects.get(pk=request.data['author_sign'][0]['id']).author_code
+
+        if request.data['keywords']:
+            for key_word in request.data['keywords']:
+                if 'id' in key_word:
                     key_word_to_assign = KeyWord.objects.get(pk=key_word['id'])
-                else:
-                    key_word_to_assign = KeyWord.objects.create(name=key_word['name'])
-                    key_word_to_assign.save()
+                elif 'name' in key_word:
+                    list_names = KeyWord.objects.filter(name=key_word['name'])
 
-            book.keywords.add(key_word_to_assign)
+                    if len(list_names) > 0:
+                        key_word_to_assign = KeyWord.objects.get(pk=key_word['id'])
+                    else:
+                        key_word_to_assign = KeyWord.objects.create(name=key_word['name'])
+                        key_word_to_assign.save()
 
-        for bbk in bbks:
-            bbk_to_assign = BBK.objects.get(pk=bbk['id'])
-            book.bbk.add(bbk_to_assign)
-
-        for author in authors:
-            author_to_assign = Author.objects.get(pk=author['id'])
-            book.author.add(author_to_assign)
+                book.keywords.add(key_word_to_assign)
 
         for bbk in bbks:
             bbk_to_assign = BBK.objects.get(pk=bbk['id'])
             book.bbk.add(bbk_to_assign)
 
-        book.publishing_house = publishing_house
-        book.issue_city = issue_city
+        if request.data['author']:
+            for author in request.data['author']:
+                author_to_assign = Author.objects.get(pk=author['id'])
+                book.author.add(author_to_assign)
 
         book.save()
 
@@ -112,10 +110,14 @@ class AuthorViewSet(ModelViewSet):
         serializer.is_valid()
         author = Author.objects.create(**serializer.validated_data)
         author.save()
-        initial_name = author.lname + ' ' + author.fname[0].upper() + '.'
-
-        if author.mname is not None:
-            initial_name += author.mname[0].upper() + '.'
+        fname_initials_list = author.fname.split(' ')
+        fname_initials = ''
+        for i in range(len(fname_initials_list)):
+            if i == 0:
+                fname_initials = fname_initials_list[i][0] + '.'
+            else:
+                fname_initials += ' ' + fname_initials_list[i][0] + '.'
+        initial_name = author.lname + ' ' + fname_initials
 
         author.short_name = initial_name
         author.save()

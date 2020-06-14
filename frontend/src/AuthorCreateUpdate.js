@@ -9,7 +9,6 @@ class AuthorCreateUpdate extends Component {
     this.state = {
         id:null,
         fname:'',
-        mname:'',
         lname:'',
         author_code:'',
       }
@@ -23,7 +22,6 @@ class AuthorCreateUpdate extends Component {
       authorManager.getAuthor(params.pk).then((a)=>{
         this.setState({
           fname:a.fname,
-          mname:a.mname,
           lname:a.lname,
           author_code: a.author_code
         })
@@ -35,7 +33,6 @@ class AuthorCreateUpdate extends Component {
     authorManager.updateAuthor({
       "pk": pk,
       "fname": this.state.fname,
-      "mname": this.state.mname,
       "lname": this.state.lname,
       "author_code": this.state.author_code,
     }).then((result)=>{
@@ -48,7 +45,6 @@ class AuthorCreateUpdate extends Component {
   handleCreate(){
     authorManager.createAuthor({
       "fname": this.state.fname,
-      "mname": this.state.mname,
       "lname": this.state.lname,
       "author_code": this.state.author_code,
     }).then((result)=>{
@@ -87,9 +83,6 @@ class AuthorCreateUpdate extends Component {
 
           <label>Имя</label>
           <input className="form-control" id="fname" type="text" value={this.state.fname} onChange={this.handleChange}/>
-
-          <label>Отчество</label>
-          <input className="form-control" id="mname" type="text" value={this.state.mname} onChange={this.handleChange}/>
 
           <label>Авторский знак</label>
           <input className="form-control" id="author_code" type="text" value={this.state.author_code} onChange={this.handleChange}/>

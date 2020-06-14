@@ -156,7 +156,7 @@ class BookCreateUpdate extends Component {
             "author_sign": this.state.currentBook.author_sign,
             "issue_year": this.state.currentBook.issue_year,
             "bbk": this.state.currentBook.bbk,
-            "keywords": this.state.currentBook.keywords,
+            "keywords": this.state.currentBook.key_words,
             "issue_city": this.state.issue_city,
             "publishing_house": this.state.publishing_house,
             "place": this.state.currentBook.place,
@@ -331,7 +331,7 @@ class BookCreateUpdate extends Component {
                                 closeMenuOnSelect={false}
                                 options={this.state.authors}
                                 value={this.state.currentBook.author}
-                                getOptionLabel={ x => (x.lname+' '+x.fname+' '+x.mname)}
+                                getOptionLabel={ x => (x.lname+' '+x.fname)}
                                 getOptionValue={ x => x.id}
                                 onChange={this.handleBookAuthorsDropDown}
                                 isMulti

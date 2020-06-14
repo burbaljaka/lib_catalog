@@ -11,10 +11,11 @@ export default class BookManager {
     return axios.get(url).then(response => response.data);
   }
   createBook(book){
-    console.log(API_URL,book);
+    console.log(book);
     return axios.post(API_URL,book)
   }
   updateBook(book){
+    console.log(book);
     const url = API_URL + book.pk +'/';
     return axios.patch(url,book)
   }
