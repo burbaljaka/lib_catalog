@@ -42,7 +42,7 @@ class BBKList extends Component {
             <th>Код</th>
             <th>Описание</th>
             <th>Действия</th>
-            <th><a className="nav-item nav-link" href="/bbks/manage/">Создать код ББК</a></th>
+            <th><a className="btn btn-sm btn-outline-dark delete" href="/bbks/manage/">Создать код ББК</a></th>
           </tr>
           </thead>
           <tbody>

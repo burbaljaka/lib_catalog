@@ -53,8 +53,9 @@ class BookViewSet(ModelViewSet):
 
         book.save()
 
-    def post(self, request):
-        key_words = request.data.pop('key_words')
+    def create(self, request):
+        print(request)
+        key_words = request.data.pop('keywords')
         authors = request.data.pop('author')
         bbks = request.data.pop('bbk')
         publishing_house = PublishingHouse.objects.get(pk=request.data.pop('publishing_house')['id'])
@@ -62,8 +63,10 @@ class BookViewSet(ModelViewSet):
 
         serializer = BookSerializer(data=request.data)
         serializer.is_valid()
-        book = Book.objects.create(**serializer.validated_data)
-        book.author_sign = Author.objects.get(pk=authors[0]['id']).author_code
+        book = Book(**serializer.validated_data)
+        if not 'author_sign' in request.data:
+            book.author_sign = Author.objects.get(pk=authors[0]['id']).author_code
+        book.save()
 
         for key_word in key_words:
             if 'id' in key_word:

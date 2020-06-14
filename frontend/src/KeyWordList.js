@@ -41,7 +41,7 @@ class KeyWordList extends Component {
             <th>#</th>
             <th>Ключевое слово</th>
             <th>Действия</th>
-            <th><a className="nav-item nav-link" href="/key_words/manage/">Создать ключевое слово</a></th>
+            <th><a className="btn btn-sm btn-outline-dark delete" href="/key_words/manage/">Создать ключевое слово</a></th>
           </tr>
           </thead>
           <tbody>

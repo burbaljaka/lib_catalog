@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+    web:
+        build: ./lib_catalog/
+        command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+        volumes:
+            - ./lib_catalog:/django
+        ports:
+            - "8000:8000"
+        stdin_open: true
+
+    client:
+        build: ./frontend
+        volumes:
+            - ./frontend:/app
+            - /app/node_modules
+        ports:
+            - '3000:3000'
+        stdin_open: true
+        environment:
+            - NODE_ENV=development
+        depends_on:
+            - "web"
+        command:
+            yarn start

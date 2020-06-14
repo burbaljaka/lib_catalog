@@ -11,6 +11,7 @@ export default class BookManager {
     return axios.get(url).then(response => response.data);
   }
   createBook(book){
+    console.log(API_URL,book);
     return axios.post(API_URL,book)
   }
   updateBook(book){

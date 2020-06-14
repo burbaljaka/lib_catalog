@@ -41,7 +41,7 @@ class CityList extends Component {
             <th>#</th>
             <th>Город</th>
             <th>Действия</th>
-            <th><a className="nav-item nav-link" href="/cities/manage/">Создать город</a></th>
+            <th><a className="btn btn-sm btn-outline-dark delete" href="/cities/manage/">Создать город</a></th>
           </tr>
           </thead>
           <tbody>

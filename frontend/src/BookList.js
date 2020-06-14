@@ -35,7 +35,7 @@ class BookList extends Component {
             <th>Название</th>
             <th>Год издания</th>
             <th>Действия</th>
-            <th><a className="nav-item nav-link" href="/books/manage/">Создать книгу</a></th>
+            <th><a className="btn btn-sm btn-outline-dark delete" href="/books/manage/">Создать книгу</a></th>
           </tr>
           </thead>
           <tbody>

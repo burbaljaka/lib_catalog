@@ -41,7 +41,7 @@ class PubList extends Component {
             <th>#</th>
             <th>Издательство</th>
             <th>Действия</th>
-            <th><a className="nav-item nav-link" href="/pubs/manage/">Создать издательство</a></th>
+            <th><a className="btn btn-sm btn-outline-dark delete" href="/pubs/manage/">Создать издательство</a></th>
           </tr>
           </thead>
           <tbody>

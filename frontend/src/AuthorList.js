@@ -42,7 +42,7 @@ class AuthorList extends Component {
             <th>Имя</th>
             <th>Авторский знак</th>
             <th>Действия</th>
-            <th><a className="nav-item nav-link" href="/authors/manage/">Создать автора</a></th>
+            <th><a className="btn btn-sm btn-outline-dark delete" href="/authors/manage/">Создать автора</a></th>
           </tr>
           </thead>
           <tbody>

@@ -4,7 +4,8 @@ import { DropdownButton, Dropdown } from 'react-bootstrap';
 import BBKManager from './BBKApi';
 import CityManager from './CitiesApi';
 import PubManager from './PubApi';
-import KeyWordManager from './KeyWordAPI'
+import KeyWordManager from './KeyWordAPI';
+import AuthorManager from './AuthorApi'
 
 import Select, { components } from "react-select";
 
@@ -14,6 +15,7 @@ const bbkManager = new BBKManager();
 const cityManager = new CityManager();
 const pubManager = new PubManager();
 const key_wordManager = new KeyWordManager();
+const authorManager = new AuthorManager();
 
 const CustomMenu = React.forwardRef(
     ({ children, style, className, 'aria-labelledby': labeledBy }, ref) => {
@@ -89,6 +91,7 @@ class BookCreateUpdate extends Component {
             new_city: '',
             bbk:[],
             key_words: [],
+            authors: [],
             redirect: false
         };
     // добавить для получения списков данных
@@ -99,7 +102,7 @@ class BookCreateUpdate extends Component {
     this.handleKeyWordDropdown = this.handleKeyWordDropdown.bind(this);
     this.handleBookKeyWordDropDown = this.handleBookKeyWordDropDown.bind(this);
     this.handleBookBBKDropDown = this.handleBookBBKDropDown.bind(this);
-
+    this.handleBookAuthorsDropDown = this.handleBookAuthorsDropDown.bind(this);
     }
 
     componentDidMount(){
@@ -111,6 +114,8 @@ class BookCreateUpdate extends Component {
             self.setState({bbk:result})});
         key_wordManager.getKeyWords().then(function(result){
             self.setState({key_words:result})});
+        authorManager.getAuthors().then(function(result){
+            self.setState({authors:result})});
         const {match: {params}} = this.props;
         let self = this;
         if(params && params.pk) {
@@ -166,14 +171,15 @@ class BookCreateUpdate extends Component {
             "author_sign": this.state.currentBook.author_sign,
             "issue_year": this.state.currentBook.issue_year,
             "bbk": this.state.currentBook.bbk,
-            "keywords": this.state.currentBook.keywords,
+            "keywords": this.state.currentBook.key_words,
             "issue_city": this.state.issue_city,
             "publishing_house": this.state.publishing_house,
             "place": this.state.currentBook.place,
+            "pages": this.state.currentBook.pages,
         }).then((result)=>{
             alert("Книга создана!");
-        }).catch(()=>{
-            alert("Ошибка! Проверь форму!");
+        }).catch((err)=>{
+            alert(err.message);
         });
     }
 
@@ -189,7 +195,7 @@ class BookCreateUpdate extends Component {
 
     handleChange(e){
         this.setState({
-            currentBook:{
+            currentBook:{...this.state.currentBook,
                 [e.target.id]:e.target.value
             }
         })
@@ -231,7 +237,6 @@ class BookCreateUpdate extends Component {
 //    }
 
     handleBookKeyWordDropDown (key_wor)  {
-        console.log(key_wor);
         let keys;
         if (key_wor !== null) {
             keys = key_wor;
@@ -239,24 +244,45 @@ class BookCreateUpdate extends Component {
             keys = []
         };
         this.setState({
-            currentBook:{
-                key_words: keys
-            }
+            currentBook:{...this.state.currentBook,
+                        key_words: keys
+                    }
         });
     }
 
     handleBookBBKDropDown (bbks)  {
-        let keys;
+        let bks;
         if (bbks !== null) {
-            keys = bbks;
+            bks = bbks;
         } else {
-            keys = []
+            bks = []
         };
         this.setState({
-            currentBook:{
-                bbk: keys
+            currentBook:{...this.state.currentBook,
+                bbk: bks
             }
         });
+    }
+
+    handleBookAuthorsDropDown (book_author) {
+        let just_authors;
+        if (book_author !== null) {
+            just_authors = book_author;
+        } else {
+            just_authors = []
+        };
+        this.setState({
+            currentBook:{...this.state.currentBook,
+                author: just_authors
+            }
+        });
+        if (this.state.currentBook.author_sign === []) {
+            this.setState({
+                currentBook:{...this.state.currentBook,
+                            author_sign: just_authors[0].author_code
+                        }
+        })}
+
     }
 
     render() {
@@ -355,6 +381,25 @@ class BookCreateUpdate extends Component {
                                 isMulti
                                 isSearchable
                                 placeholder="Выберите ББК"
+                            />
+                        </div>
+                    </div>
+
+                    <div className="row justify-content-end">
+                        <div className="col-4">
+                            <label>Авторы:</label>
+                        </div>
+                        <div className="col-8">
+                            <Select
+                                closeMenuOnSelect={false}
+                                options={this.state.authors}
+                                value={this.state.currentBook.author}
+                                getOptionLabel={ x => (x.lname+' '+x.fname+' '+x.mname)}
+                                getOptionValue={ x => x.id}
+                                onChange={this.handleBookAuthorsDropDown}
+                                isMulti
+                                isSearchable
+                                placeholder="Выберите авторов"
                             />
                         </div>
                     </div>
