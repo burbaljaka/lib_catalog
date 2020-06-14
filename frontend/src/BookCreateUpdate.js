@@ -77,6 +77,8 @@ class BookCreateUpdate extends Component {
                 key_words:[],
                 place: '',
                 pages: '',
+                series: '',
+                additional_data: '',
             },
             cities:[],
             publishing_houses:[],
@@ -132,7 +134,9 @@ class BookCreateUpdate extends Component {
                         bbk: a.bbk,
                         key_words: a.keywords,
                         place: a.place,
-                        pages: a.pages
+                        pages: a.pages,
+                        additional_data: a.additional_data,
+                        series: a.series,
                     },
                     issue_city: a.issue_city,
                     publishing_house: a.publishing_house,
@@ -156,6 +160,8 @@ class BookCreateUpdate extends Component {
             "issue_city": this.state.issue_city,
             "publishing_house": this.state.publishing_house,
             "place": this.state.currentBook.place,
+            "additional_data": this.state.currentBook.additional_data,
+            "series": this.state.currentBook.series,
         }).then((result)=>{
             alert("Книга отредактирована!");
         }).catch(()=>{
@@ -176,6 +182,8 @@ class BookCreateUpdate extends Component {
             "publishing_house": this.state.publishing_house,
             "place": this.state.currentBook.place,
             "pages": this.state.currentBook.pages,
+            "additional_data": this.state.currentBook.additional_data,
+            "series": this.state.currentBook.series,
         }).then((result)=>{
             alert("Книга создана!");
         }).catch((err)=>{
@@ -292,23 +300,52 @@ class BookCreateUpdate extends Component {
         <div className="container">
             <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
-                    <label >Название</label>
-                    <input onChange={this.handleChange} id="name" className="form-control" type="text" value={this.state.currentBook.name}/>
+                    <div className="row justify-content-end">
+                        <div className="col-4">
+                            <label>ББК:</label>
+                        </div>
+                        <div className="col-8">
+                            <Select
+                                closeMenuOnSelect={false}
+                                options={this.state.bbk}
+                                value={this.state.currentBook.bbk}
+                                getOptionLabel={ x => (x.code+' '+x.description)}
+                                getOptionValue={ x => x.id}
+                                onChange={this.handleBookBBKDropDown}
+                                isMulti
+                                isSearchable
+                                placeholder="Выберите ББК"
+                            />
+                        </div>
+                    </div>
 
                     <label>Авторский знак</label>
                     <input className="form-control" id="author_sign" type="text" value={this.state.currentBook.author_sign} onChange={this.handleChange}/>
 
-                    <label>Год издания</label>
-                    <input className="form-control" id="issue_year" type="text" value={this.state.currentBook.issue_year} onChange={this.handleChange}/>
+                    <div className="row justify-content-end">
+                        <div className="col-4">
+                            <label>Автор/Авторы:</label>
+                        </div>
+                        <div className="col-8">
+                            <Select
+                                closeMenuOnSelect={false}
+                                options={this.state.authors}
+                                value={this.state.currentBook.author}
+                                getOptionLabel={ x => (x.lname+' '+x.fname+' '+x.mname)}
+                                getOptionValue={ x => x.id}
+                                onChange={this.handleBookAuthorsDropDown}
+                                isMulti
+                                isSearchable
+                                placeholder="Выберите авторов"
+                            />
+                        </div>
+                    </div>
 
-                    <label>Описание</label>
-                    <textarea className="form-control" id="description" rows="7" type="text" value={this.state.currentBook.description} onChange={this.handleChange}/>
+                    <label >Название</label>
+                    <input onChange={this.handleChange} id="name" className="form-control" type="text" value={this.state.currentBook.name}/>
 
-                    <label>Расположение</label>
-                    <input className="form-control" id="place" type="text" value={this.state.currentBook.place} onChange={this.handleChange}/>
-
-                    <label>Количество страниц</label>
-                    <input className="form-control" id="pages" type="text" value={this.state.currentBook.pages} onChange={this.handleChange}/>
+                    <label>Дополнительные сведения</label>
+                    <input onChange={this.handleChange} id="additional_data" className="form-control" type="text" value={this.state.currentBook.additional_data}/>
 
                     <div className="row justify-content-end">
                         <div className="col-8">
@@ -346,6 +383,21 @@ class BookCreateUpdate extends Component {
                         </div>
                     </div>
 
+                    <label>Год издания</label>
+                    <input className="form-control" id="issue_year" type="text" value={this.state.currentBook.issue_year} onChange={this.handleChange}/>
+
+                    <label>Количество страниц</label>
+                    <input className="form-control" id="pages" type="text" value={this.state.currentBook.pages} onChange={this.handleChange}/>
+
+                    <label>Серия</label>
+                    <input onChange={this.handleChange} id="series" className="form-control" type="text" value={this.state.currentBook.series}/>
+
+                    <label>Аннотация</label>
+                    <textarea className="form-control" id="description" rows="7" type="text" value={this.state.currentBook.description} onChange={this.handleChange}/>
+
+                    <label>Расположение</label>
+                    <input className="form-control" id="place" type="text" value={this.state.currentBook.place} onChange={this.handleChange}/>
+
                     <div className="row justify-content-end">
                         <div className="col-4">
                             <label>Ключевые слова:
@@ -366,43 +418,9 @@ class BookCreateUpdate extends Component {
                         </div>
                     </div>
 
-                    <div className="row justify-content-end">
-                        <div className="col-4">
-                            <label>ББК:</label>
-                        </div>
-                        <div className="col-8">
-                            <Select
-                                closeMenuOnSelect={false}
-                                options={this.state.bbk}
-                                value={this.state.currentBook.bbk}
-                                getOptionLabel={ x => (x.code+' '+x.description)}
-                                getOptionValue={ x => x.id}
-                                onChange={this.handleBookBBKDropDown}
-                                isMulti
-                                isSearchable
-                                placeholder="Выберите ББК"
-                            />
-                        </div>
-                    </div>
 
-                    <div className="row justify-content-end">
-                        <div className="col-4">
-                            <label>Авторы:</label>
-                        </div>
-                        <div className="col-8">
-                            <Select
-                                closeMenuOnSelect={false}
-                                options={this.state.authors}
-                                value={this.state.currentBook.author}
-                                getOptionLabel={ x => (x.lname+' '+x.fname+' '+x.mname)}
-                                getOptionValue={ x => x.id}
-                                onChange={this.handleBookAuthorsDropDown}
-                                isMulti
-                                isSearchable
-                                placeholder="Выберите авторов"
-                            />
-                        </div>
-                    </div>
+
+
                 </div>
 
             <input className="btn btn-primary" type="submit" value="Сохранить"/>
