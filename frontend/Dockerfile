@@ -3,8 +3,8 @@ FROM node:12
 # Create and set the directory for this container
 WORKDIR /app/
 # Install Application dependencies
-RUN npm install --no-optional
-RUN npm install --save react react-dom react-scripts
+RUN npm install -g react-scripts
+RUN npm install
 # Copy over the rest of the project
 COPY . /app/
 
