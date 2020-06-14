@@ -4,7 +4,8 @@ FROM node:12
 WORKDIR /app/
 # Install Application dependencies
 RUN npm install -g react-scripts
-RUN npm install --save axios
+RUN npm install -g axios
+RUN npm i bootstrap
 RUN npm install
 # Copy over the rest of the project
 COPY . /app/
