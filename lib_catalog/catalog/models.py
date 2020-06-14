@@ -9,7 +9,7 @@ class Author(models.Model):
     author_code = models.CharField(max_length=200, blank=True, null=True)
 
     def __str__(self):
-        return self.short_name
+        return self.lname + ' ' + self.fname
 
 
 class KeyWord(models.Model):
