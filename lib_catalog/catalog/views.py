@@ -127,7 +127,7 @@ class AuthorViewSet(ModelViewSet):
 
 
 class PublishingHouseViewSet(ModelViewSet):
-    queryset = PublishingHouse.objects.all()
+    queryset = PublishingHouse.objects.all().order_by('name')
     serializer_class = PublishingHouseSerializer
 
 
@@ -142,5 +142,5 @@ class KeyWordViewSet(ModelViewSet):
 
 
 class IssueCityViewSet(ModelViewSet):
-    queryset = IssueCity.objects.all()
+    queryset = IssueCity.objects.all().obder_by('name')
     serializer_class = IssueCitySerializer
