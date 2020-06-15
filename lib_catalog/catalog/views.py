@@ -134,7 +134,7 @@ class PublishingHouseViewSet(ModelViewSet):
 
 
 class BBKViewSet(ModelViewSet):
-    queryset = BBK.objects.all()
+    queryset = BBK.objects.all().order_by('code')
     serializer_class = BBKSerializer
 
 

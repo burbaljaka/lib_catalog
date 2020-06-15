@@ -7,6 +7,7 @@ class Author(models.Model):
     lname = models.CharField(max_length=200)
     short_name = models.CharField(max_length=200, blank=True, null=True)
     author_code = models.CharField(max_length=200, blank=True, null=True)
+    addition = models.CharField(max_length=2000, blank=True, null=True)
 
     def __str__(self):
         return self.lname + ' ' + self.fname

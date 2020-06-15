@@ -11,6 +11,7 @@ class AuthorCreateUpdate extends Component {
         fname:'',
         lname:'',
         author_code:'',
+        addition: '',
       }
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -23,7 +24,8 @@ class AuthorCreateUpdate extends Component {
         this.setState({
           fname:a.fname,
           lname:a.lname,
-          author_code: a.author_code
+          author_code: a.author_code,
+          addition: a.addition,
         })
       })
     }
@@ -35,6 +37,7 @@ class AuthorCreateUpdate extends Component {
       "fname": this.state.fname,
       "lname": this.state.lname,
       "author_code": this.state.author_code,
+      "addition": this.state.addition,
     }).then((result)=>{
         alert("Автор отредактирован!");
       }).catch(()=>{
@@ -47,6 +50,7 @@ class AuthorCreateUpdate extends Component {
       "fname": this.state.fname,
       "lname": this.state.lname,
       "author_code": this.state.author_code,
+      "addition": this.state.addition,
     }).then((result)=>{
         alert("Автор создан!");
       }).catch(()=>{
@@ -86,6 +90,9 @@ class AuthorCreateUpdate extends Component {
 
           <label>Авторский знак</label>
           <input className="form-control" id="author_code" type="text" value={this.state.author_code} onChange={this.handleChange}/>
+
+          <label>Справочная информация</label>
+          <textarea className="form-control" id="addition" rows="7" type="text" value={this.state.addition} onChange={this.handleChange}/>
 
           <input className="btn btn-primary" type="submit" value="Сохранить"/>
 
