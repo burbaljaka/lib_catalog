@@ -68,8 +68,10 @@ class BookViewSet(ModelViewSet):
             issue_city = IssueCity.objects.get(pk=request.data.pop('issue_city')['id'])
             book.issue_city = issue_city
 
-        if request.data['author_sign'] == '':
-            book.author_sign = Author.objects.get(pk=request.data['author_sign'][0]['id']).author_code
+        if request.data['author_sign'] != '':
+            book.author_sign = request.data['author_sign']
+        else:
+            book.author_sign = Author.objects.get(pk=request.data['author'][0]['id']).author_code
 
         if request.data['keywords']:
             for key_word in request.data['keywords']:

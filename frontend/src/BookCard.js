@@ -55,7 +55,7 @@ class BookCard extends Component {
           issue_city: a.issue_city,
           publishing_house: a.publishing_house,
           issue_year: a.issue_year,
-          pages: a.pages
+          pages: a.pages,
         })
       })
     }
