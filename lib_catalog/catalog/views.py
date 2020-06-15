@@ -142,5 +142,5 @@ class KeyWordViewSet(ModelViewSet):
 
 
 class IssueCityViewSet(ModelViewSet):
-    queryset = IssueCity.objects.all().obder_by('name')
+    queryset = IssueCity.objects.all().order_by('name')
     serializer_class = IssueCitySerializer
