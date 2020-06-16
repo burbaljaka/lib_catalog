@@ -8,6 +8,7 @@ import KeyWordManager from './KeyWordAPI';
 import AuthorManager from './AuthorApi'
 
 import Select, { components } from "react-select";
+import Popup from "reactjs-popup";
 
 
 const bookManager = new BookManager();
@@ -94,6 +95,13 @@ class BookCreateUpdate extends Component {
             bbk:[],
             key_words: [],
             authors: [],
+            new_author: {
+                id: '',
+                fname: '',
+                lname: '',
+                author_code: '',
+                addition: ''
+            },
             redirect: false
         };
     // добавить для получения списков данных
@@ -105,6 +113,11 @@ class BookCreateUpdate extends Component {
     this.handleBookKeyWordDropDown = this.handleBookKeyWordDropDown.bind(this);
     this.handleBookBBKDropDown = this.handleBookBBKDropDown.bind(this);
     this.handleBookAuthorsDropDown = this.handleBookAuthorsDropDown.bind(this);
+    this.handleAuthorChange = this.handleAuthorChange.bind(this);
+    this.handleAuthorCreate = this.handleAuthorCreate.bind(this);
+
+
+
     }
 
     componentDidMount(){
@@ -209,6 +222,35 @@ class BookCreateUpdate extends Component {
         })
     }
 
+    handleAuthorChange(e){
+        this.setState({
+            new_author:{...this.state.new_author,
+                [e.target.id]:e.target.value
+            }
+        })
+    }
+
+    handleAuthorCreate(e) {
+        authorManager.createAuthor({
+            "fname": this.state.new_author.fname,
+            "lname": this.state.new_author.lname,
+            "author_code": this.state.new_author.author_code,
+            "addition": this.state.new_author.addition
+        }).then((result)=>{console.log(result.data);
+                            this.setState({
+                                new_author: result.data});
+                            });
+        let newAuthorArray = this.state.authors;
+        console.log(newAuthorArray);
+        newAuthorArray.unshift(this.state.new_author);
+        this.setState({
+            authors: newAuthorArray
+        });
+        console.log(this.state.authors);
+    }
+
+
+
     handleCitiesDropdown(e){
         this.setState({
             issue_city:{
@@ -298,13 +340,13 @@ class BookCreateUpdate extends Component {
         return (
 
         <div className="container">
-            <form onSubmit={this.handleSubmit}>
+            <form id="bookForm" onSubmit={this.handleSubmit}>
                 <div className="form-group">
                     <div className="row justify-content-end">
                         <div className="col-4">
                             <label>ББК:</label>
                         </div>
-                        <div className="col-8">
+                        <div className="col-5">
                             <Select
                                 closeMenuOnSelect={false}
                                 options={this.state.bbk}
@@ -317,6 +359,7 @@ class BookCreateUpdate extends Component {
                                 placeholder="Выберите ББК"
                             />
                         </div>
+
                     </div>
 
                     <label>Авторский знак</label>
@@ -326,7 +369,7 @@ class BookCreateUpdate extends Component {
                         <div className="col-4">
                             <label>Автор/Авторы:</label>
                         </div>
-                        <div className="col-8">
+                        <div className="col-5">
                             <Select
                                 closeMenuOnSelect={false}
                                 options={this.state.authors}
@@ -338,6 +381,40 @@ class BookCreateUpdate extends Component {
                                 isSearchable
                                 placeholder="Выберите авторов"
                             />
+                        </div>
+                        <div className="col-3">
+                            <Popup trigger={<input className="btn btn-sm btn-outline-light delete" value="Создать автора"/>} modal>
+                                {close => (
+                                    <div className="form-group">
+
+                                        <label>Фамилия</label>
+                                            <input onChange={this.handleAuthorChange} id="lname" className="form-control" type="text" />
+
+                                        <label>Имя</label>
+                                        <input className="form-control" id="fname" type="text"  onChange={this.handleAuthorChange}/>
+
+                                        <label>Авторский знак</label>
+                                        <input className="form-control" id="author_code" type="text"  onChange={this.handleAuthorChange}/>
+
+                                        <label>Справочная информация</label>
+                                        <textarea className="form-control" id="addition" rows="7" type="text"  onChange={this.handleAuthorChange}/>
+
+                                        <div className="row justify-content-center">
+                                            <div className ="col-4">
+                                                <input className="btn btn-primary"
+                                                    type="submit"
+                                                    form="authorForm"
+                                                    value="Сохранить"
+                                                    onClick={this.handleAuthorCreate}
+                                                />
+                                            </div>
+                                            <div className ="col-4">
+                                                <input className="btn btn-primary" value="Закрыть" type="submit" onClick={()=> {close();}}/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </Popup>
                         </div>
                     </div>
 
@@ -423,7 +500,7 @@ class BookCreateUpdate extends Component {
 
                 </div>
 
-            <input className="btn btn-primary" type="submit" value="Сохранить"/>
+            <input className="btn btn-primary" form ="bookForm" type="submit" value="Сохранить"/>
 
 
         </form>
