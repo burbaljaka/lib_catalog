@@ -102,7 +102,7 @@ class BookCard extends Component {
                   </tr>
                   <tr>
                       <td></td>
-                      <td>{this.state.description}</td>
+                      <td><i>{this.state.description}</i></td>
                   </tr>
                   <tr>
                     <td>{this.state.place}</td>

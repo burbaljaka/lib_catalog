@@ -91,7 +91,10 @@ class BookCreateUpdate extends Component {
                 id:null,
                 name:''
             },
-            new_city: '',
+            new_city: {
+                id:'',
+                name:'',
+            },
             bbk:[],
             key_words: [],
             authors: [],
@@ -101,6 +104,19 @@ class BookCreateUpdate extends Component {
                 lname: '',
                 author_code: '',
                 addition: ''
+            },
+            new_BBK:{
+                id: '',
+                code:'',
+                description:''
+            },
+            new_pub:{
+                id:'',
+                name:'',
+            },
+            new_key_word:{
+                id:'',
+                name:'',
             },
             redirect: false
         };
@@ -115,8 +131,16 @@ class BookCreateUpdate extends Component {
     this.handleBookAuthorsDropDown = this.handleBookAuthorsDropDown.bind(this);
     this.handleAuthorChange = this.handleAuthorChange.bind(this);
     this.handleAuthorCreate = this.handleAuthorCreate.bind(this);
-
-
+    this.handleBBKChange = this.handleBBKChange.bind(this);
+    this.handleBBKCreate = this.handleBBKCreate.bind(this);
+    this.handlePubChange = this.handlePubChange.bind(this);
+    this.handlePubCreate = this.handlePubCreate.bind(this);
+    this.handleCityChange = this.handleCityChange.bind(this);
+    this.handleCityCreate = this.handleCityCreate.bind(this);
+    this.handleKeyWordChange = this.handleKeyWordChange.bind(this);
+    this.handleKeyWordCreate = this.handleKeyWordCreate.bind(this);
+    this.handleBookCityDropDown = this.handleBookCityDropDown.bind(this);
+    this.handleBookPubDropDown = this.handleBookPubDropDown.bind(this);
 
     }
 
@@ -142,8 +166,8 @@ class BookCreateUpdate extends Component {
                         description:a.description,
                         author_sign: a.author_sign,
                         issue_year: a.issue_year,
-                        issue_city: a.issue_city.name,
-                        publishing_house: a.publishing_house.name,
+                        issue_city: a.issue_city,
+                        publishing_house: a.publishing_house,
                         bbk: a.bbk,
                         key_words: a.keywords,
                         place: a.place,
@@ -231,24 +255,113 @@ class BookCreateUpdate extends Component {
     }
 
     handleAuthorCreate(e) {
+        console.log(this.state.authors);
         authorManager.createAuthor({
             "fname": this.state.new_author.fname,
             "lname": this.state.new_author.lname,
             "author_code": this.state.new_author.author_code,
             "addition": this.state.new_author.addition
-        }).then((result)=>{console.log(result.data);
-                            this.setState({
+        }).then((result)=>{this.setState({
                                 new_author: result.data});
                             });
         let newAuthorArray = this.state.authors;
-        console.log(newAuthorArray);
         newAuthorArray.unshift(this.state.new_author);
         this.setState({
             authors: newAuthorArray
         });
         console.log(this.state.authors);
+
     }
 
+    handleBBKChange(e){
+        this.setState({
+            new_BBK:{...this.state.new_BBK,
+                [e.target.id]:e.target.value
+            }
+        })
+    }
+
+    handleBBKCreate(e) {
+        bbkManager.createBBK({
+            "code": this.state.new_BBK.code,
+            "description": this.state.new_BBK.description,
+        }).then((result)=>{this.setState({
+                                new_BBK: result.data});
+                            });
+        let newBBKArray = this.state.bbk;
+        newBBKArray.unshift(this.state.new_BBK);
+        this.setState({
+            bbk: newBBKArray
+        });
+    }
+
+    handlePubChange(e){
+        this.setState({
+            new_pub:{...this.state.new_pub,
+                [e.target.id]:e.target.value
+            }
+        })
+    }
+
+    handlePubCreate(e) {
+        pubManager.createPub({
+            "name": this.state.new_pub.name,
+        }).then((result)=>{this.setState({
+                                new_pub: result.data});
+                            });
+        let newPubArray = this.state.publishing_houses;
+        newPubArray.unshift(this.state.new_pub);
+        this.setState({
+            publishing_houses: newPubArray
+        })
+    }
+
+    handleCityChange(e){
+        this.setState({
+            new_city:{...this.state.new_city,
+                [e.target.id]:e.target.value
+            }
+        })
+    }
+
+    handleCityCreate(e) {
+        console.log(this.state.cities);
+        cityManager.createCity({
+            "name": this.state.new_city.name,
+        }).then((result)=>{console.log(result.data);
+                            this.setState({
+                                new_city: result.data});
+                            });
+        let newCityArray = this.state.cities;
+        newCityArray.unshift(this.state.new_city);
+        this.setState({
+            cities: newCityArray
+        });
+    }
+
+    handleKeyWordChange(e){
+        this.setState({
+            new_key_word:{...this.state.new_key_word,
+                [e.target.id]:e.target.value
+            }
+        })
+    }
+
+    handleKeyWordCreate(e) {
+        console.log(this.state.key_words);
+        key_wordManager.createKeyWord({
+            "name": this.state.new_key_word.name,
+        }).then((result)=>{console.log(result.data);
+                            this.setState({
+                                new_key_word: result.data});
+                            });
+        let newKeyArray = this.state.key_words;
+        newKeyArray.unshift(this.state.new_key_word);
+        console.log(newKeyArray);
+        this.setState({
+            key_words: newKeyArray
+        })
+    }
 
 
     handleCitiesDropdown(e){
@@ -278,14 +391,6 @@ class BookCreateUpdate extends Component {
         });
     }
 
-//    renderKeyWords() {
-//        return (this.state.key_words.map(data=>({label:data.name, value:data.id})))
-//    }
-
-//    renderBookKeyWords() {
-//        return (this.state.currentBook.key_words.map(data=>({label:data.name, value:data.id})))
-//    }
-
     handleBookKeyWordDropDown (key_wor)  {
         let keys;
         if (key_wor !== null) {
@@ -298,6 +403,19 @@ class BookCreateUpdate extends Component {
                         key_words: keys
                     }
         });
+    }
+
+    handleBookPubDropDown (key_wor)  {
+        this.setState({
+            publishing_house:key_wor
+        });
+        console.log(this.state.publishing_house);
+    }
+
+    handleBookCityDropDown (key_wor)  {
+        this.setState({
+            issue_city: key_wor}
+        );
     }
 
     handleBookBBKDropDown (bbks)  {
@@ -343,10 +461,10 @@ class BookCreateUpdate extends Component {
             <form id="bookForm" onSubmit={this.handleSubmit}>
                 <div className="form-group">
                     <div className="row justify-content-end">
-                        <div className="col-4">
+                        <div className="col-2">
                             <label>ББК:</label>
                         </div>
-                        <div className="col-5">
+                        <div className="col-7">
                             <Select
                                 closeMenuOnSelect={false}
                                 options={this.state.bbk}
@@ -359,6 +477,34 @@ class BookCreateUpdate extends Component {
                                 placeholder="Выберите ББК"
                             />
                         </div>
+                        <div className="col-3">
+                            <Popup trigger={<input className="btn btn-sm btn-outline-light delete" value="Создать ББК"/>} modal>
+                                {close => (
+                                    <div className="form-group">
+
+                                        <label>Код</label>
+                                            <input onChange={this.handleBBKChange} id="code" className="form-control" type="text" />
+
+                                        <label>Описание</label>
+                                        <input className="form-control" id="description" type="text"  onChange={this.handleBBKChange}/>
+
+                                        <div className="row justify-content-center">
+                                            <div className ="col-4">
+                                                <input className="btn btn-primary"
+                                                    type="submit"
+                                                    form="BBKForm"
+                                                    value="Сохранить"
+                                                    onClick={this.handleBBKCreate}
+                                                />
+                                            </div>
+                                            <div className ="col-4">
+                                                <input className="btn btn-primary" value="Закрыть" type="submit" onClick={()=> {close();}}/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </Popup>
+                        </div>
 
                     </div>
 
@@ -366,10 +512,10 @@ class BookCreateUpdate extends Component {
                     <input className="form-control" id="author_sign" type="text" value={this.state.currentBook.author_sign} onChange={this.handleChange}/>
 
                     <div className="row justify-content-end">
-                        <div className="col-4">
+                        <div className="col-2">
                             <label>Автор/Авторы:</label>
                         </div>
-                        <div className="col-5">
+                        <div className="col-7">
                             <Select
                                 closeMenuOnSelect={false}
                                 options={this.state.authors}
@@ -397,7 +543,7 @@ class BookCreateUpdate extends Component {
                                         <input className="form-control" id="author_code" type="text"  onChange={this.handleAuthorChange}/>
 
                                         <label>Справочная информация</label>
-                                        <textarea className="form-control" id="addition" rows="7" type="text"  onChange={this.handleAuthorChange}/>
+                                        <textarea className="form-control" id="addition" rows="4" type="text"  onChange={this.handleAuthorChange}/>
 
                                         <div className="row justify-content-center">
                                             <div className ="col-4">
@@ -425,38 +571,86 @@ class BookCreateUpdate extends Component {
                     <input onChange={this.handleChange} id="additional_data" className="form-control" type="text" value={this.state.currentBook.additional_data}/>
 
                     <div className="row justify-content-end">
-                        <div className="col-8">
-                            <label>Город издательства: <strong>{this.state.issue_city.name}</strong></label>
+                        <div className="col-2">
+                            <label>Город издательства: </label>
                         </div>
-                        <div className="col-4">
-                            <Dropdown>
-                                <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-                                    Выбрать город издательства
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu as={CustomMenu}>
-                                    {this.state.cities.map(function(c){
-                                        return <Dropdown.Item eventKey={c.id} id={c.id} onClick={self.handleCitiesDropdown}>{c.name}</Dropdown.Item>
-                                    })}
-                                </Dropdown.Menu>
-                            </Dropdown>
+                        <div className="col-7">
+                            <Select
+                                options={this.state.cities}
+                                value={this.state.issue_city}
+                                getOptionLabel={ x => x.name}
+                                getOptionValue={ x => x.id}
+                                onChange={this.handleBookCityDropDown}
+                                isSearchable
+                                placeholder="Выберите город"
+                            />
+                        </div>
+                        <div className="col-3">
+                            <Popup trigger={<input className="btn btn-sm btn-outline-light delete" value="Создать город"/>} modal>
+                                {close => (
+                                    <div className="form-group">
+
+                                        <label>Город издательства</label>
+                                            <input onChange={this.handleCityChange} id="name" className="form-control" type="text" />
+
+                                        <div className="row justify-content-center">
+                                            <div className ="col-4">
+                                                <input className="btn btn-primary"
+                                                    type="submit"
+                                                    form="CityForm"
+                                                    value="Сохранить"
+                                                    onClick={this.handleCityCreate}
+                                                />
+                                            </div>
+                                            <div className ="col-4">
+                                                <input className="btn btn-primary" value="Закрыть" type="submit" onClick={()=> {close();}}/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </Popup>
                         </div>
                     </div>
 
                     <div className="row justify-content-end">
-                        <div className="col-8">
-                            <label>Издательство: <strong>{this.state.publishing_house.name}</strong></label>
+                        <div className="col-2">
+                            <label>Издательство:</label>
                         </div>
-                        <div className="col-4">
-                            <Dropdown>
-                                <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-                                    Выбрать издательство
-                                </Dropdown.Toggle>
-                                <Dropdown.Menu as={CustomMenu}>
-                                    {this.state.publishing_houses.map(function(c){
-                                        return <Dropdown.Item eventKey={c.id} id={c.id} onClick={self.handleHouseDropdown}>{c.name}</Dropdown.Item>
-                                    })}
-                                </Dropdown.Menu>
-                            </Dropdown>
+                        <div className="col-7">
+                            <Select
+                                options={this.state.publishing_houses}
+                                value={this.state.publishing_house}
+                                getOptionLabel={ x => x.name}
+                                getOptionValue={ x => x.id}
+                                onChange={this.handleBookPubDropDown}
+                                isSearchable
+                                placeholder="Выберите издательство"
+                            />
+                        </div>
+                        <div className="col-3">
+                            <Popup trigger={<input className="btn btn-sm btn-outline-light delete" value="Создать издательство"/>} modal>
+                                {close => (
+                                    <div className="form-group">
+
+                                        <label>Город издательства</label>
+                                            <input onChange={this.handlePubChange} id="name" className="form-control" type="text" />
+
+                                        <div className="row justify-content-center">
+                                            <div className ="col-4">
+                                                <input className="btn btn-primary"
+                                                    type="submit"
+                                                    form="PubForm"
+                                                    value="Сохранить"
+                                                    onClick={this.handlePubCreate}
+                                                />
+                                            </div>
+                                            <div className ="col-4">
+                                                <input className="btn btn-primary" value="Закрыть" type="submit" onClick={()=> {close();}}/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </Popup>
                         </div>
                     </div>
 
@@ -470,17 +664,17 @@ class BookCreateUpdate extends Component {
                     <input onChange={this.handleChange} id="series" className="form-control" type="text" value={this.state.currentBook.series}/>
 
                     <label>Аннотация</label>
-                    <textarea className="form-control" id="description" rows="7" type="text" value={this.state.currentBook.description} onChange={this.handleChange}/>
+                    <textarea className="form-control" id="description" rows="7" type="text"  style={{fontStyle: 'italic'}} value={this.state.currentBook.description} onChange={this.handleChange}/>
 
                     <label>Расположение</label>
                     <input className="form-control" id="place" type="text" value={this.state.currentBook.place} onChange={this.handleChange}/>
 
                     <div className="row justify-content-end">
-                        <div className="col-4">
+                        <div className="col-2">
                             <label>Ключевые слова:
                             </label>
                         </div>
-                        <div className="col-8">
+                        <div className="col-7">
                             <Select
                                 closeMenuOnSelect={false}
                                 options={this.state.key_words}
@@ -493,11 +687,32 @@ class BookCreateUpdate extends Component {
                                 placeholder="Выберите ключевые слова"
                             />
                         </div>
+                        <div className="col-3">
+                            <Popup trigger={<input className="btn btn-sm btn-outline-light delete" value="Создать слово"/>} modal>
+                                {close => (
+                                    <div className="form-group">
+
+                                        <label>Город издательства</label>
+                                            <input onChange={this.handleKeyWordChange} id="name" className="form-control" type="text" />
+
+                                        <div className="row justify-content-center">
+                                            <div className ="col-4">
+                                                <input className="btn btn-primary"
+                                                    type="submit"
+                                                    form="KeyWordForm"
+                                                    value="Сохранить"
+                                                    onClick={this.handleKeyWordCreate}
+                                                />
+                                            </div>
+                                            <div className ="col-4">
+                                                <input className="btn btn-primary" value="Закрыть" type="submit" onClick={()=> {close();}}/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )}
+                            </Popup>
+                        </div>
                     </div>
-
-
-
-
                 </div>
 
             <input className="btn btn-primary" form ="bookForm" type="submit" value="Сохранить"/>
