@@ -747,7 +747,7 @@
     "model": "catalog.bbk",
     "fields": {
       "id": 94,
-      "code": " ",
+      "code": "32.811 ",
       "description": "Теория информации. Общая теория связи"
     }
   },
@@ -979,8 +979,8 @@
     "model": "catalog.bbk",
     "fields": {
       "id": 123,
-      "code": " ",
-      "description": ""
+      "code": "36 ",
+      "description": "Пищевые производства"
     }
   },
   {
@@ -995,8 +995,8 @@
     "model": "catalog.bbk",
     "fields": {
       "id": 125,
-      "code": " ",
-      "description": ""
+      "code": "37 ",
+      "description": "Технология древесины. Производства легкой промышленности. Домоводство. Бытовые услуги. Полиграфическое производство. Фотокинотехника"
     }
   },
   {
@@ -1523,40 +1523,40 @@
     "model": "catalog.bbk",
     "fields": {
       "id": 191,
-      "code": "",
-      "description": ""
+      "code": "60.5",
+      "description": "Социология"
     }
   },
   {
     "model": "catalog.bbk",
     "fields": {
       "id": 192,
-      "code": " ",
-      "description": ""
+      "code": "60.6 ",
+      "description": "Статистика"
     }
   },
   {
     "model": "catalog.bbk",
     "fields": {
       "id": 193,
-      "code": " ",
-      "description": ""
+      "code": "60.7 ",
+      "description": "Демография"
     }
   },
   {
     "model": "catalog.bbk",
     "fields": {
       "id": 194,
-      "code": "",
-      "description": ""
+      "code": "60.8",
+      "description": "Социальное управление"
     }
   },
   {
     "model": "catalog.bbk",
     "fields": {
       "id": 195,
-      "code": "",
-      "description": ""
+      "code": "60.9",
+      "description": "Социальная защита Социальная работа"
     }
   },
   {
@@ -2835,16 +2835,16 @@
     "model": "catalog.bbk",
     "fields": {
       "id": 355,
-      "code": "",
-      "description": ""
+      "code": "74.3",
+      "description": "Образование взрослых Андрагогика"
     }
   },
   {
     "model": "catalog.bbk",
     "fields": {
       "id": 356,
-      "code": " ",
-      "description": ". Вузы, техникумы, колледжи, ПТУ"
+      "code": "74.4 ",
+      "description": "Профессиональное и специальное образование. Вузы, техникумы, колледжи, ПТУ"
     }
   },
   {
@@ -2859,8 +2859,8 @@
     "model": "catalog.bbk",
     "fields": {
       "id": 358,
-      "code": "",
-      "description": ""
+      "code": "74.5",
+      "description": "Специальные школы Коррекционная (специальная) педагогика"
     }
   },
   {
@@ -2891,24 +2891,24 @@
     "model": "catalog.bbk",
     "fields": {
       "id": 362,
-      "code": "",
-      "description": ""
+      "code": "74.6",
+      "description": "Специализированные отрасли педагогики"
     }
   },
   {
     "model": "catalog.bbk",
     "fields": {
       "id": 363,
-      "code": "",
-      "description": ""
+      "code": "74.9",
+      "description": "Семейное воспитание и образование. Семейная педагогика"
     }
   },
   {
     "model": "catalog.bbk",
     "fields": {
       "id": 364,
-      "code": "",
-      "description": ""
+      "code": "74.92",
+      "description": "Семейное (домашнее) обучение"
     }
   },
   {
@@ -3491,72 +3491,72 @@
     "model": "catalog.bbk",
     "fields": {
       "id": 437,
-      "code": " ",
-      "description": ""
+      "code": "88.1 ",
+      "description": "История психологии"
     }
   },
   {
     "model": "catalog.bbk",
     "fields": {
       "id": 438,
-      "code": " ",
-      "description": ""
+      "code": "88.2 ",
+      "description": "Общая психология"
     }
   },
   {
     "model": "catalog.bbk",
     "fields": {
       "id": 439,
-      "code": " ",
-      "description": ""
+      "code": "88.3 ",
+      "description": "Психология личности"
     }
   },
   {
     "model": "catalog.bbk",
     "fields": {
       "id": 440,
-      "code": "",
-      "description": ""
+      "code": "88.4",
+      "description": "Психология развития и возрастная психология"
     }
   },
   {
     "model": "catalog.bbk",
     "fields": {
       "id": 441,
-      "code": "",
-      "description": ""
+      "code": "88.5",
+      "description": "Социальная психология"
     }
   },
   {
     "model": "catalog.bbk",
     "fields": {
       "id": 442,
-      "code": "",
-      "description": ""
+      "code": "88.6",
+      "description": "Педагогическая психология"
     }
   },
   {
     "model": "catalog.bbk",
     "fields": {
       "id": 443,
-      "code": "",
-      "description": ""
+      "code": "88.7",
+      "description": "Медицинская(клиническая) психология"
     }
   },
   {
     "model": "catalog.bbk",
     "fields": {
       "id": 444,
-      "code": "",
-      "description": ""
+      "code": "88.8",
+      "description": "Психология труда и профессиональной деятельности"
     }
   },
   {
     "model": "catalog.bbk",
     "fields": {
       "id": 445,
-      "code": "",
-      "description": ""
+      "code": "88.9",
+      "description": "Практическая(прикладная) психология"
     }
   },
   {

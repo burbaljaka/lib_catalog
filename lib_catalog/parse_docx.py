@@ -1,7 +1,7 @@
 import docx
 import json
 
-doc = docx.Document('bbk school.docx')
+doc = docx.Document('bbk new.docx')
 bbk_dict = []
 pars = doc.paragraphs[3:]
 for i in range(len(pars)):
