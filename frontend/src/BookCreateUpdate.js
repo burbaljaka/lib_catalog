@@ -264,13 +264,14 @@ class BookCreateUpdate extends Component {
         }).then((result)=>{this.setState({
                                 new_author: result.data});
                             });
-        let newAuthorArray = this.state.authors;
-        newAuthorArray.unshift(this.state.new_author);
+        let authors = this.state.authors;
+        let new_author = this.state.new_author;
+        authors.unshift(new_author);
+        // let newAuthorArray = this.state.authors;
+        // newAuthorArray.unshift(this.state.new_author);
         this.setState({
-            authors: newAuthorArray
-        });
-        console.log(this.state.authors);
-
+            authors: authors
+        })
     }
 
     handleBBKChange(e){
@@ -289,10 +290,9 @@ class BookCreateUpdate extends Component {
                                 new_BBK: result.data});
                             });
         let newBBKArray = this.state.bbk;
-        newBBKArray.unshift(this.state.new_BBK);
-        this.setState({
-            bbk: newBBKArray
-        });
+        let new_BBK = this.state.new_BBK;
+        newBBKArray.unshift(new_BBK);
+        this.setState({bbk: newBBKArray});
     }
 
     handlePubChange(e){
@@ -310,10 +310,12 @@ class BookCreateUpdate extends Component {
                                 new_pub: result.data});
                             });
         let newPubArray = this.state.publishing_houses;
-        newPubArray.unshift(this.state.new_pub);
+        let new_pub = this.state.new_pub;
+        newPubArray.unshift(new_pub);
         this.setState({
             publishing_houses: newPubArray
-        })
+        });
+
     }
 
     handleCityChange(e){
@@ -333,7 +335,8 @@ class BookCreateUpdate extends Component {
                                 new_city: result.data});
                             });
         let newCityArray = this.state.cities;
-        newCityArray.unshift(this.state.new_city);
+        let new_city = this.state.new_city;
+        newCityArray.unshift(new_city);
         this.setState({
             cities: newCityArray
         });
@@ -356,7 +359,8 @@ class BookCreateUpdate extends Component {
                                 new_key_word: result.data});
                             });
         let newKeyArray = this.state.key_words;
-        newKeyArray.unshift(this.state.new_key_word);
+        let new_key_word = this.state.new_key_word;
+        newKeyArray.unshift(new_key_word);
         console.log(newKeyArray);
         this.setState({
             key_words: newKeyArray
@@ -664,7 +668,7 @@ class BookCreateUpdate extends Component {
                     <input onChange={this.handleChange} id="series" className="form-control" type="text" value={this.state.currentBook.series}/>
 
                     <label>Аннотация</label>
-                    <textarea className="form-control" id="description" rows="7" type="text"  style={{fontStyle: 'italic'}} value={this.state.currentBook.description} onChange={this.handleChange}/>
+                    <textarea className="form-control" id="description" rows="7" style={{fontStyle: 'italic'}} value={this.state.currentBook.description} onChange={this.handleChange}/>
 
                     <label>Расположение</label>
                     <input className="form-control" id="place" type="text" value={this.state.currentBook.place} onChange={this.handleChange}/>
