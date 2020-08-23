@@ -43,9 +43,14 @@ class BookList extends Component {
               return (
                 <tr key={b.id}>
                   <td>{b.id}</td>
-                  <td>{b.author.map(function(a){
-                    return (
-                      <span key={a.id}>{a.short_name}, </span>)
+                  <td>{b.author.map(function(a, index){
+                    if (index===0) {
+                      return (
+                          <span key={a.id}>{a.short_name}</span>)
+                    }
+                    else {
+                      return (<span key={a.id}>, {a.short_name} </span>)
+                    }
                   })}</td>
                   <td>{b.name}</td>
                   <td>{b.issue_year}</td>

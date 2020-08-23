@@ -89,11 +89,14 @@ class BookCard extends Component {
                   </tr>
                   <tr>
                       <td>{this.state.author_sign}</td>
-                      <td>{this.state.authors.map(function(a){
-                        return (
-                          <span>{a.short_name}, </span>
-                        )
-                      })}
+                      <td>{this.state.authors.map(function(a, index){
+                          if (index===0) {
+                              return (
+                                  <span key={a.id}>{a.short_name}</span>)
+                          }
+                          else {
+                              return (<span key={a.id}>, {a.short_name} </span>)
+                          }})}
                       </td>
                   </tr>
                   <tr>

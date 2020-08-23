@@ -179,8 +179,6 @@ class BookCreateUpdate extends Component {
                     publishing_house: a.publishing_house,
                 })
             });
-
-        ;
         }
     }
 
@@ -261,18 +259,9 @@ class BookCreateUpdate extends Component {
             "lname": this.state.new_author.lname,
             "author_code": this.state.new_author.author_code,
             "addition": this.state.new_author.addition
-        }).then((result)=>{this.setState({
-                                new_author: result.data});
-                            });
-        let authors = this.state.authors;
-        let new_author = this.state.new_author;
-        authors.unshift(new_author);
-        // let newAuthorArray = this.state.authors;
-        // newAuthorArray.unshift(this.state.new_author);
-        this.setState({
-            authors: authors
-        })
-    }
+        }).then(()=>authorManager.getAuthors().then(res=>this.setState({authors: res})))
+    };
+
 
     handleBBKChange(e){
         this.setState({
@@ -286,13 +275,7 @@ class BookCreateUpdate extends Component {
         bbkManager.createBBK({
             "code": this.state.new_BBK.code,
             "description": this.state.new_BBK.description,
-        }).then((result)=>{this.setState({
-                                new_BBK: result.data});
-                            });
-        let newBBKArray = this.state.bbk;
-        let new_BBK = this.state.new_BBK;
-        newBBKArray.unshift(new_BBK);
-        this.setState({bbk: newBBKArray});
+        }).then(()=>{bbkManager.getBBK().then(res=>this.setState({bbk: res}))});
     }
 
     handlePubChange(e){
@@ -306,15 +289,7 @@ class BookCreateUpdate extends Component {
     handlePubCreate(e) {
         pubManager.createPub({
             "name": this.state.new_pub.name,
-        }).then((result)=>{this.setState({
-                                new_pub: result.data});
-                            });
-        let newPubArray = this.state.publishing_houses;
-        let new_pub = this.state.new_pub;
-        newPubArray.unshift(new_pub);
-        this.setState({
-            publishing_houses: newPubArray
-        });
+        }).then(()=>{pubManager.getPubs().then(res=>this.setState({publishing_houses: res}))});
 
     }
 
@@ -330,16 +305,7 @@ class BookCreateUpdate extends Component {
         console.log(this.state.cities);
         cityManager.createCity({
             "name": this.state.new_city.name,
-        }).then((result)=>{console.log(result.data);
-                            this.setState({
-                                new_city: result.data});
-                            });
-        let newCityArray = this.state.cities;
-        let new_city = this.state.new_city;
-        newCityArray.unshift(new_city);
-        this.setState({
-            cities: newCityArray
-        });
+        }).then(()=>{cityManager.getCities().then(res=>this.setState({cities: res}))});
     }
 
     handleKeyWordChange(e){
@@ -354,17 +320,7 @@ class BookCreateUpdate extends Component {
         console.log(this.state.key_words);
         key_wordManager.createKeyWord({
             "name": this.state.new_key_word.name,
-        }).then((result)=>{console.log(result.data);
-                            this.setState({
-                                new_key_word: result.data});
-                            });
-        let newKeyArray = this.state.key_words;
-        let new_key_word = this.state.new_key_word;
-        newKeyArray.unshift(new_key_word);
-        console.log(newKeyArray);
-        this.setState({
-            key_words: newKeyArray
-        })
+        }).then(()=>{key_wordManager.getKeyWords().then(res=>this.setState({key_words: res}))});
     }
 
 
@@ -511,15 +467,18 @@ class BookCreateUpdate extends Component {
                         </div>
 
                     </div>
+                    <div className="row justify-content-mid">
+                        <div className="col-2"><label>Авторский знак</label></div>
+                        <div className="col-7"><input className="form-control" id="author_sign" type="text" value={this.state.currentBook.author_sign} onChange={this.handleChange}/></div>
+                    </div>
 
-                    <label>Авторский знак</label>
-                    <input className="form-control" id="author_sign" type="text" value={this.state.currentBook.author_sign} onChange={this.handleChange}/>
 
                     <div className="row justify-content-end">
                         <div className="col-2">
                             <label>Автор/Авторы:</label>
                         </div>
                         <div className="col-7">
+
                             <Select
                                 closeMenuOnSelect={false}
                                 options={this.state.authors}
@@ -527,6 +486,7 @@ class BookCreateUpdate extends Component {
                                 getOptionLabel={ x => (x.lname+' '+x.fname)}
                                 getOptionValue={ x => x.id}
                                 onChange={this.handleBookAuthorsDropDown}
+                                onClick={this.getAuthors}
                                 isMulti
                                 isSearchable
                                 placeholder="Выберите авторов"
@@ -568,11 +528,15 @@ class BookCreateUpdate extends Component {
                         </div>
                     </div>
 
-                    <label >Название</label>
-                    <input onChange={this.handleChange} id="name" className="form-control" type="text" value={this.state.currentBook.name}/>
+                    <div className="row justify-content-mid">
+                        <div className="col-2"><label>Название</label></div>
+                        <div className="col-7"><input onChange={this.handleChange} id="name" className="form-control" type="text" value={this.state.currentBook.name}/></div>
+                    </div>
 
-                    <label>Дополнительные сведения</label>
-                    <input onChange={this.handleChange} id="additional_data" className="form-control" type="text" value={this.state.currentBook.additional_data}/>
+                    <div className="row justify-content-mid">
+                        <div className="col-2"><label>Дополнительные сведения</label></div>
+                        <div className="col-7"><input onChange={this.handleChange} id="additional_data" className="form-control" type="text" value={this.state.currentBook.additional_data}/></div>
+                    </div>
 
                     <div className="row justify-content-end">
                         <div className="col-2">
@@ -658,20 +622,30 @@ class BookCreateUpdate extends Component {
                         </div>
                     </div>
 
-                    <label>Год издания</label>
-                    <input className="form-control" id="issue_year" type="text" value={this.state.currentBook.issue_year} onChange={this.handleChange}/>
+                    <div className="row justify-content-mid">
+                        <div className="col-2"><label>Год издания</label></div>
+                        <div className="col-7"><input className="form-control" id="issue_year" type="text" value={this.state.currentBook.issue_year} onChange={this.handleChange}/></div>
+                    </div>
 
-                    <label>Количество страниц</label>
-                    <input className="form-control" id="pages" type="text" value={this.state.currentBook.pages} onChange={this.handleChange}/>
+                    <div className="row justify-content-mid">
+                        <div className="col-2"><label>Количество страниц</label></div>
+                        <div className="col-7"><input className="form-control" id="pages" type="text" value={this.state.currentBook.pages} onChange={this.handleChange}/></div>
+                    </div>
 
-                    <label>Серия</label>
-                    <input onChange={this.handleChange} id="series" className="form-control" type="text" value={this.state.currentBook.series}/>
+                    <div className="row justify-content-mid">
+                        <div className="col-2"><label>Серия</label></div>
+                        <div className="col-7"><input onChange={this.handleChange} id="series" className="form-control" type="text" value={this.state.currentBook.series}/></div>
+                    </div>
 
-                    <label>Аннотация</label>
-                    <textarea className="form-control" id="description" rows="7" style={{fontStyle: 'italic'}} value={this.state.currentBook.description} onChange={this.handleChange}/>
+                    <div className="row justify-content-mid">
+                        <div className="col-2"><label>Аннотация</label></div>
+                        <div className="col-7"><textarea className="form-control" id="description" rows="3" style={{fontStyle: 'italic'}} value={this.state.currentBook.description} onChange={this.handleChange}/></div>
+                    </div>
 
-                    <label>Расположение</label>
-                    <input className="form-control" id="place" type="text" value={this.state.currentBook.place} onChange={this.handleChange}/>
+                    <div className="row justify-content-mid">
+                        <div className="col-2"><label>Расположение</label></div>
+                        <div className="col-7"><input className="form-control" id="place" type="text" value={this.state.currentBook.place} onChange={this.handleChange}/></div>
+                    </div>
 
                     <div className="row justify-content-end">
                         <div className="col-2">

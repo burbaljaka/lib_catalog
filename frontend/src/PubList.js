@@ -22,7 +22,7 @@ class PubList extends Component {
 
   handleDelete(pub) {
     var self = this;
-    pubManager.deleteCity(pub).then(() => {
+    pubManager.deletePub(pub).then(() => {
       var newArr = self.state.pubs.filter(function(obj){
         return obj.id !== pub.id;
       });
