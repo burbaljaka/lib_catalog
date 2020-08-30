@@ -1,4 +1,5 @@
 import React, { Component, useState } from 'react';
+
 import BookManager from './BookApi';
 import { DropdownButton, Dropdown } from 'react-bootstrap';
 import BBKManager from './BBKApi';
@@ -182,6 +183,8 @@ class BookCreateUpdate extends Component {
         }
     }
 
+
+
     handleUpdate(pk){
         bookManager.updateBook({
             "pk": pk,
@@ -259,8 +262,10 @@ class BookCreateUpdate extends Component {
             "lname": this.state.new_author.lname,
             "author_code": this.state.new_author.author_code,
             "addition": this.state.new_author.addition
-        }).then(()=>authorManager.getAuthors().then(res=>this.setState({authors: res})))
-    };
+        }).then(()=>authorManager.getAuthors().then(res=>{
+        this.setState({authors: res});
+        alert('Автор создан')
+    }))};
 
 
     handleBBKChange(e){
@@ -275,7 +280,10 @@ class BookCreateUpdate extends Component {
         bbkManager.createBBK({
             "code": this.state.new_BBK.code,
             "description": this.state.new_BBK.description,
-        }).then(()=>{bbkManager.getBBK().then(res=>this.setState({bbk: res}))});
+        }).then(()=>{bbkManager.getBBK().then(res=> {
+            this.setState({bbk: res});
+            alert("Код создан")
+        })});
     }
 
     handlePubChange(e){
@@ -289,7 +297,10 @@ class BookCreateUpdate extends Component {
     handlePubCreate(e) {
         pubManager.createPub({
             "name": this.state.new_pub.name,
-        }).then(()=>{pubManager.getPubs().then(res=>this.setState({publishing_houses: res}))});
+        }).then(()=>{pubManager.getPubs().then(res=>{
+            this.setState({publishing_houses: res});
+            alert("Издательство создано")
+        })});
 
     }
 
@@ -305,7 +316,10 @@ class BookCreateUpdate extends Component {
         console.log(this.state.cities);
         cityManager.createCity({
             "name": this.state.new_city.name,
-        }).then(()=>{cityManager.getCities().then(res=>this.setState({cities: res}))});
+        }).then(()=>{cityManager.getCities().then(res=> {
+            this.setState({cities: res});
+            alert("Город создан")
+        })});
     }
 
     handleKeyWordChange(e){
@@ -320,7 +334,10 @@ class BookCreateUpdate extends Component {
         console.log(this.state.key_words);
         key_wordManager.createKeyWord({
             "name": this.state.new_key_word.name,
-        }).then(()=>{key_wordManager.getKeyWords().then(res=>this.setState({key_words: res}))});
+        }).then(()=>{key_wordManager.getKeyWords().then(res=> {
+            this.setState({key_words: res});
+            alert("Слово создано")
+        })});
     }
 
 
