@@ -7,3 +7,4 @@ lxml==4.5.1
 python-docx==0.8.10
 pytz==2020.1
 sqlparse==0.3.1
+psycopg2-binary==2.8.6

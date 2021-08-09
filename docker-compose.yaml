@@ -26,3 +26,12 @@ services:
             - "web"
         command:
             npm start
+
+    database:
+        image: postgres
+        environment:
+            POSTGRES_PASSWORD: django
+            POSTGRES_DB: django
+            POSTGRES_USER: django
+        ports:
+            - "5432:5432"
