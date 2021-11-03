@@ -1,10 +1,10 @@
-FROM python:latest
+FROM python:3.7
 ENV LANG C.UTF-8
 
 RUN mkdir /django
 
 RUN apt-get -y update
-RUN apt-get install -y python python-pip python-dev
+RUN apt-get install -y python python3-pip python-dev
 
 ADD requirements.txt /django/requirements.txt
 RUN pip install -r /django/requirements.txt

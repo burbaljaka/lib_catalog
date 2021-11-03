@@ -1,5 +1,5 @@
 # official node.js runtime for Docker
-FROM node:latest
+FROM node:16
 # Create and set the directory for this container
 WORKDIR /app/
 COPY . /app/
