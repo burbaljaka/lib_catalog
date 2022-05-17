@@ -2,7 +2,7 @@
 
 body{
   background: rgb(54,217,182);
-  background: linear-gradient(90deg, rgba(54,217,182,1) 25%, rgba(32,152,150,1) 75% 50%);
+  background: linear-gradient(90deg, rgba(54,217,182,1) 25%, rgba(32,190,151,1) 75%);
 }
 
 h1, h2, h3, h4, h5, p, span, strike{
