@@ -50,7 +50,7 @@ const CustomMenu = React.forwardRef(
 
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     <button
-        className="btn btn-sm btn-outline-light delete"
+        className="btn btn-sm btn-outline-light"
         ref={ref}
         onClick={(e) => {
         e.preventDefault();
@@ -146,21 +146,26 @@ class BookCreateUpdate extends Component {
     }
 
     componentDidMount(){
-        cityManager.getCities().then(function(result) {
-            self.setState({cities:result})});
-        pubManager.getPubs().then(function(result) {
-            self.setState({publishing_houses:result})});
-        bbkManager.getBBKs().then(function(result) {
-            self.setState({bbk:result})});
-        key_wordManager.getKeyWords().then(function(result){
-            self.setState({key_words:result})});
-        authorManager.getAuthors().then(function(result){
-            self.setState({authors:result})});
+        const self = this;
+        cityManager.getCities().then((result) => {
+            self.setState({cities: result});
+        });
+        pubManager.getPubs().then((result) => {
+            self.setState({publishing_houses: result});
+        });
+        bbkManager.getBBKs().then((result) => {
+            self.setState({bbk: result});
+        });
+        key_wordManager.getKeyWords().then((result) => {
+            self.setState({key_words: result});
+        });
+        authorManager.getAuthors().then((result) => {
+            self.setState({authors: result});
+        });
         const {match: {params}} = this.props;
-        let self = this;
         if(params && params.pk) {
             bookManager.getBook(params.pk).then((a)=>{
-                this.setState({
+                self.setState({
                     currentBook:{
                         name:a.name,
                         author:a.author,
@@ -280,7 +285,7 @@ class BookCreateUpdate extends Component {
         bbkManager.createBBK({
             "code": this.state.new_BBK.code,
             "description": this.state.new_BBK.description,
-        }).then(()=>{bbkManager.getBBK().then(res=> {
+        }).then(()=>{bbkManager.getBBKs().then(res=> {
             this.setState({bbk: res});
             alert("Код создан")
         })});
@@ -433,8 +438,7 @@ class BookCreateUpdate extends Component {
     render() {
         var self = this;
         return (
-
-        <div className="container">
+        <div className="app-form-card">
             <form id="bookForm" onSubmit={this.handleSubmit}>
                 <div className="form-group">
                     <div className="row justify-content-end">
@@ -455,7 +459,7 @@ class BookCreateUpdate extends Component {
                             />
                         </div>
                         <div className="col-3">
-                            <Popup trigger={<input className="btn btn-sm btn-outline-light delete" value="Создать ББК"/>} modal>
+                            <Popup trigger={<input type="button" className="btn btn-sm btn-outline-light" value="Создать ББК" readOnly />} modal>
                                 {close => (
                                     <div className="form-group">
 
@@ -510,7 +514,7 @@ class BookCreateUpdate extends Component {
                             />
                         </div>
                         <div className="col-3">
-                            <Popup trigger={<input className="btn btn-sm btn-outline-light delete" value="Создать автора"/>} modal>
+                            <Popup trigger={<input type="button" className="btn btn-sm btn-outline-light" value="Создать автора" readOnly />} modal>
                                 {close => (
                                     <div className="form-group">
 
@@ -571,7 +575,7 @@ class BookCreateUpdate extends Component {
                             />
                         </div>
                         <div className="col-3">
-                            <Popup trigger={<input className="btn btn-sm btn-outline-light delete" value="Создать город"/>} modal>
+                            <Popup trigger={<input type="button" className="btn btn-sm btn-outline-light" value="Создать город" readOnly />} modal>
                                 {close => (
                                     <div className="form-group">
 
@@ -613,7 +617,7 @@ class BookCreateUpdate extends Component {
                             />
                         </div>
                         <div className="col-3">
-                            <Popup trigger={<input className="btn btn-sm btn-outline-light delete" value="Создать издательство"/>} modal>
+                            <Popup trigger={<input type="button" className="btn btn-sm btn-outline-light" value="Создать издательство" readOnly />} modal>
                                 {close => (
                                     <div className="form-group">
 
@@ -683,7 +687,7 @@ class BookCreateUpdate extends Component {
                             />
                         </div>
                         <div className="col-3">
-                            <Popup trigger={<input className="btn btn-sm btn-outline-light delete" value="Создать слово"/>} modal>
+                            <Popup trigger={<input type="button" className="btn btn-sm btn-outline-light" value="Создать слово" readOnly />} modal>
                                 {close => (
                                     <div className="form-group">
 
@@ -710,7 +714,7 @@ class BookCreateUpdate extends Component {
                     </div>
                 </div>
 
-            <input className="btn btn-primary" form ="bookForm" type="submit" value="Сохранить"/>
+            <input className="btn btn-primary" form="bookForm" type="submit" value="Сохранить" />
 
 
         </form>

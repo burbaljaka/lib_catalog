@@ -1,13 +1,160 @@
+:root {
+  --app-bg: #f4f5f5;
+  --app-surface: #ffffff;
+  --app-border: #e8e9ea;
+  --app-text: #1a1d21;
+  --app-text-muted: #5f656d;
+  --app-accent: #0d9488;
+  --app-accent-hover: #0f766e;
+  --app-accent-light: #ccfbf1;
+  --app-radius: 8px;
+  --app-radius-sm: 6px;
+  --app-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  --app-shadow-md: 0 4px 12px rgba(0,0,0,0.06);
+  --app-font: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+  --app-space: 12px;
+  --app-space-lg: 20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--app-font);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--app-text);
+  background: var(--app-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+  font-family: ui-monospace, monospace;
+}
+
+/* Override Bootstrap container for compact max-width */
+.app .container,
+.app .container-fluid {
+  max-width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: var(--app-space-lg);
+  padding-right: var(--app-space-lg);
+}
+
+/* Tables: compact, clean */
+.app .table {
+  margin-bottom: 0;
+  font-size: 13px;
+}
+
+.app .table thead th {
+  font-weight: 600;
+  color: var(--app-text-muted);
+  text-transform: none;
+  letter-spacing: 0.02em;
+  border-bottom: 1px solid var(--app-border);
+  padding: 10px 12px;
+  background: var(--app-surface);
+}
+
+.app .table tbody td {
+  padding: 10px 12px;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--app-border);
+}
+
+.app .table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.app .table tbody tr:hover {
+  background: #fafafa;
+}
+
+/* Buttons: accent primary, ghost secondary */
+.app .btn {
+  font-family: var(--app-font);
+  font-weight: 500;
+  font-size: 13px;
+  border-radius: var(--app-radius-sm);
+  padding: 6px 12px;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.app .btn-primary {
+  background: var(--app-accent);
+  border-color: var(--app-accent);
+}
+
+.app .btn-primary:hover {
+  background: var(--app-accent-hover);
+  border-color: var(--app-accent-hover);
+}
+
+.app .btn-outline-dark,
+.app .btn-outline-secondary {
+  border-color: var(--app-border);
+  color: var(--app-text);
+  background: var(--app-surface);
+}
+
+.app .btn-outline-dark:hover,
+.app .btn-outline-secondary:hover {
+  background: var(--app-bg);
+  border-color: var(--app-text-muted);
+  color: var(--app-text);
+}
+
+.app .btn-outline-light.delete,
+.app .btn-outline-light {
+  border-color: var(--app-border);
+  color: var(--app-text-muted);
+  background: transparent;
+}
+
+.app .btn-outline-light:hover,
+.app .btn-outline-light.delete:hover {
+  background: var(--app-accent-light);
+  border-color: var(--app-accent);
+  color: var(--app-accent);
+}
+
+.app .btn-sm {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+/* Form controls */
+.app .form-control {
+  font-family: var(--app-font);
+  font-size: 13px;
+  border-radius: var(--app-radius-sm);
+  border: 1px solid var(--app-border);
+  padding: 6px 10px;
+  min-height: 34px;
+}
+
+.app .form-control:focus {
+  border-color: var(--app-accent);
+  box-shadow: 0 0 0 2px var(--app-accent-light);
+  outline: none;
+}
+
+.app label {
+  font-weight: 500;
+  color: var(--app-text);
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+.app .form-group {
+  margin-bottom: var(--app-space);
+}
+
+.app .form-group label {
+  display: block;
 }

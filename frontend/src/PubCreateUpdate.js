@@ -65,7 +65,7 @@ class PubCreateUpdate extends Component {
 
   render() {
     return (
-      <div className="container">
+      <div className="app-form-card">
       <form onSubmit={this.handleSubmit}>
         <div className="form-group">
           <label>Издательство</label>

@@ -18,27 +18,27 @@ import './App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 const BaseLayout = () => (
-  <div className="container-fluid">
-    <nav className="navbar navbar-expand-lg navbar-light bg-light">
-    <a className="navbar-brand" href="/">Список книг</a>
-
-    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"  aria-controls="navbarNavAltMarkup"  aria-expanded="false"  aria-label="Toggle navigation">
-    <span className="navbar-toggler-icon"></span>
-    </button>
-    <div className="collapse navbar-collapse"  id="navbarNavAltMarkup">
-       <div className="navbar-nav">
-           <a className="nav-item nav-link" href="/authors/">Авторы</a>
-           <a className="nav-item nav-link" href="/cities/">Города</a>
-           <a className="nav-item nav-link" href="/pubs/">Издательства</a>
-           <a className="nav-item nav-link" href="/bbks/">Коды ББК</a>
-           <a className="nav-item nav-link" href="/key_words/">Ключевые слова</a>
-
-
-       </div>
-    </div>
+  <div className="app">
+    <nav className="navbar navbar-expand-lg app-nav">
+      <div className="container">
+        <a className="navbar-brand" href="/">Список книг</a>
+        <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Меню">
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div className="navbar-nav">
+            <a className="nav-link" href="/authors/">Авторы</a>
+            <a className="nav-link" href="/cities/">Города</a>
+            <a className="nav-link" href="/pubs/">Издательства</a>
+            <a className="nav-link" href="/bbks/">Коды ББК</a>
+            <a className="nav-link" href="/key_words/">Ключевые слова</a>
+          </div>
+        </div>
+      </div>
     </nav>
 
-   <div className="content">
+    <main className="app-content">
+      <div className="container">
       <Route path="/" exact component={BookList} />
       <Route path="/books/card/:pk" exact component={BookCard} />
       <Route path="/books/manage/" exact component={BookCreateUpdate} />
@@ -58,7 +58,8 @@ const BaseLayout = () => (
       <Route path="/key_words/" exact component={KeyWordList} />
       <Route path="/key_words/manage/" exact component={KeyWordCreateUpdate} />
       <Route path="/key_words/manage/:pk" exact component={KeyWordCreateUpdate} />
-   </div>
+      </div>
+    </main>
   </div>
 )
 

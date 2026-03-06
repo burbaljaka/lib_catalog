@@ -79,27 +79,25 @@ class AuthorCreateUpdate extends Component {
 
   render() {
     return (
-      <div className="container">
-      <form onSubmit={this.handleSubmit}>
-        <div className="form-group">
-          <label>Фамилия</label>
-          <input onChange={this.handleChange} id="lname" className="form-control" type="text" value={this.state.lname}/>
+      <div className="app-form-card">
+        <form onSubmit={this.handleSubmit}>
+          <div className="form-group">
+            <label>Фамилия</label>
+            <input onChange={this.handleChange} id="lname" className="form-control" type="text" value={this.state.lname} />
 
-          <label>Имя</label>
-          <input className="form-control" id="fname" type="text" value={this.state.fname} onChange={this.handleChange}/>
+            <label>Имя</label>
+            <input className="form-control" id="fname" type="text" value={this.state.fname} onChange={this.handleChange} />
 
-          <label>Авторский знак</label>
-          <input className="form-control" id="author_code" type="text" value={this.state.author_code} onChange={this.handleChange}/>
+            <label>Авторский знак</label>
+            <input className="form-control" id="author_code" type="text" value={this.state.author_code} onChange={this.handleChange} />
 
-          <label>Справочная информация</label>
-          <textarea className="form-control" id="addition" rows="7" type="text" value={this.state.addition} onChange={this.handleChange}/>
+            <label>Справочная информация</label>
+            <textarea className="form-control" id="addition" rows="4" value={this.state.addition} onChange={this.handleChange} />
 
-          <input className="btn btn-primary" type="submit" value="Сохранить"/>
-
-
-        </div>
-      </form>
-      <a href="http://lib.sportedu.ru/HAVkina1.idc" style={{color: 'black'}}>Таблицы авторских знаков</a>
+            <input className="btn btn-primary" type="submit" value="Сохранить" />
+          </div>
+        </form>
+        <a href="http://lib.sportedu.ru/HAVkina1.idc" style={{ color: 'var(--app-accent)', fontSize: '13px' }}>Таблицы авторских знаков</a>
       </div>
     );
   }

@@ -67,61 +67,48 @@ class BookCard extends Component {
       return <Redirect to='/' />
     }
     return (
-      <div className="container">
-          <div className="book-card">
-          <div className="row justify-content-end">
-            <div className="col-1">
-              <a href={"/books/manage/" + this.props.match.params.pk} className="btn btn-sm btn-outline-light delete">Изменить</a>
-            </div>
-            <div className="col-1">
-              <button onClick={()=> self.handleDelete(this.props.pk)} className="btn btn-sm btn-outline-light delete">Удалить</button>
-            </div>
-          </div>
-              <table className="table">
-              <tbody>
-                  <tr>
-                      {this.state.bbk.map(function(b){
-                        return (
-                          <td width="100">
-                              {b.code}
-                          </td>
-                        )})}
-                  </tr>
-                  <tr>
-                      <td>{this.state.author_sign}</td>
-                      <td>{this.state.authors.map(function(a, index){
-                          if (index===0) {
-                              return (
-                                  <span key={a.id}>{a.short_name}</span>)
-                          }
-                          else {
-                              return (<span key={a.id}>, {a.short_name} </span>)
-                          }})}
-                      </td>
-                  </tr>
-                  <tr>
-                      <td></td>
-                      <td>{self.state.name} / {self.state.additional_data} - {self.state.issue_city.name}: {self.state.publishing_house.name}, {self.state.issue_year}. - {self.state.pages} - {self.state.series}</td>
-                  </tr>
-                  <tr>
-                      <td></td>
-                      <td><i>{this.state.description}</i></td>
-                  </tr>
-                  <tr>
-                    <td>{this.state.place}</td>
-                    <td></td>
-                  </tr>
-                  <tr>
-                     <td></td>
-                     <td>{this.state.keywords.map(function(w){
-                        return (
-                          <span>{w.name}, </span>
-                        )
-                      })}</td>
-                  </tr>
-              </tbody>
-              </table>
-          </div>
+      <div className="app-book-card">
+        <div className="book-card-actions">
+          <a href={"/books/manage/" + this.props.match.params.pk} className="btn btn-primary btn-sm">Изменить</a>
+          <button type="button" onClick={() => self.handleDelete(this.props.pk)} className="btn btn-sm btn-outline-light">Удалить</button>
+        </div>
+        <table className="table">
+          <tbody>
+            <tr>
+              <td>ББК</td>
+              <td>{(this.state.bbk || []).map(function(b) { return <span key={b.id} style={{ marginRight: '8px' }}>{b.code}</span>; })}</td>
+            </tr>
+            <tr>
+              <td>Автор</td>
+              <td>{this.state.author_sign} {(this.state.authors || []).map(function(a, index) {
+                if (index === 0) return <span key={a.id}>{a.short_name}</span>;
+                return <span key={a.id}>, {a.short_name}</span>;
+              })}</td>
+            </tr>
+            <tr>
+              <td>Название</td>
+              <td>{self.state.name} {self.state.additional_data && '/ ' + self.state.additional_data} — {(self.state.issue_city && self.state.issue_city.name) || '—'}: {(self.state.publishing_house && self.state.publishing_house.name) || '—'}, {self.state.issue_year}. — {self.state.pages} {self.state.series && '— ' + self.state.series}</td>
+            </tr>
+            {this.state.description && (
+              <tr>
+                <td>Аннотация</td>
+                <td><i>{this.state.description}</i></td>
+              </tr>
+            )}
+            {this.state.place && (
+              <tr>
+                <td>Расположение</td>
+                <td>{this.state.place}</td>
+              </tr>
+            )}
+            {(this.state.keywords || []).length > 0 && (
+              <tr>
+                <td>Ключевые слова</td>
+                <td>{(this.state.keywords || []).map(function(w) { return <span key={w.id}>{w.name}, </span>; })}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>
     )
   }

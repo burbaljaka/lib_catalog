@@ -23,48 +23,53 @@ class BookList extends Component {
 
 
   render() {
-    var self = this
+    var self = this;
     return (
-      <div className="container">
-      <div className="books--list">
-        <table className="table">
-          <thead key="thead">
-          <tr >
-            <th>#</th>
-            <th>Автор</th>
-            <th>Название</th>
-            <th>Год издания</th>
-            <th>Действия</th>
-            <th><a className="btn btn-sm btn-outline-dark delete" href="/books/manage/">Создать книгу</a></th>
-          </tr>
-          </thead>
-          <tbody>
-            {this.state.books.map(function(b){
-              return (
-                <tr key={b.id}>
-                  <td>{b.id}</td>
-                  <td>{b.author.map(function(a, index){
-                    if (index===0) {
-                      return (
-                          <span key={a.id}>{a.short_name}</span>)
-                    }
-                    else {
-                      return (<span key={a.id}>, {a.short_name} </span>)
-                    }
-                  })}</td>
-                  <td>{b.name}</td>
-                  <td>{b.issue_year}</td>
-                  <td>
-                    <a href={"/books/card/" + b.id} className="btn btn-sm btn-outline-light delete">Просмотреть карточку</a>
+      <>
+        <div className="app-list-header">
+          <h1 className="app-list-title">Книги</h1>
+          <a className="btn btn-primary btn-sm" href="/books/manage/">Создать книгу</a>
+        </div>
+        <div className="app-card books--list">
+          <table className="table">
+            <thead key="thead">
+              <tr>
+                <th>#</th>
+                <th>Автор</th>
+                <th>Название</th>
+                <th>Год</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.books.length === 0 ? (
+                <tr>
+                  <td colSpan="5" style={{ color: 'var(--app-text-muted)', padding: '24px', textAlign: 'center' }}>
+                    Нет книг. <a href="/books/manage/">Добавить книгу</a>
                   </td>
                 </tr>
-              )
-            }
-            )}
-          </tbody>
-        </table>
-      </div>
-      </div>
+              ) : (
+                this.state.books.map(function(b) {
+                  return (
+                    <tr key={b.id}>
+                      <td>{b.id}</td>
+                      <td>{(b.author || []).map(function(a, index) {
+                        if (index === 0) return <span key={a.id}>{a.short_name}</span>;
+                        return <span key={a.id}>, {a.short_name}</span>;
+                      })}</td>
+                      <td>{b.name}</td>
+                      <td>{b.issue_year}</td>
+                      <td>
+                        <a href={"/books/card/" + b.id} className="btn btn-sm btn-outline-light">Карточка</a>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+      </>
     );
   }
 }

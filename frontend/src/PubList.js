@@ -31,37 +31,45 @@ class PubList extends Component {
   }
 
   render() {
-    var self = this
+    var self = this;
     return (
-      <div className="container">
-      <div className="pubs--list">
-        <table className="table">
-          <thead key="thead">
-          <tr>
-            <th>#</th>
-            <th>Издательство</th>
-            <th>Действия</th>
-            <th><a className="btn btn-sm btn-outline-dark delete" href="/pubs/manage/">Создать издательство</a></th>
-          </tr>
-          </thead>
-          <tbody>
-            {this.state.pubs.map(function(c){
-              return (
-                <tr key={c.id}>
-                  <td>{c.id}</td>
-                  <td>{c.name}</td>
-                  <td>
-                    <a href={"/pubs/manage/" + c.id} className="btn btn-sm btn-outline-light delete">Изменить</a>
-                    <button onClick={()=> self.handleDelete(c)} className="btn btn-sm btn-outline-light delete">Удалить</button>
-                  </td>
+      <>
+        <div className="app-list-header">
+          <h1 className="app-list-title">Издательства</h1>
+          <a className="btn btn-primary btn-sm" href="/pubs/manage/">Создать издательство</a>
+        </div>
+        <div className="app-card pubs--list">
+          <table className="table">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Издательство</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.state.pubs.length === 0 ? (
+                <tr>
+                  <td colSpan="3" style={{ color: 'var(--app-text-muted)', padding: '24px', textAlign: 'center' }}>Нет записей</td>
                 </tr>
-              )
-            }
-            )}
-          </tbody>
-        </table>
-      </div>
-      </div>
+              ) : (
+                this.state.pubs.map(function(c) {
+                  return (
+                    <tr key={c.id}>
+                      <td>{c.id}</td>
+                      <td>{c.name}</td>
+                      <td>
+                        <a href={"/pubs/manage/" + c.id} className="btn btn-sm btn-outline-light">Изменить</a>
+                        <button type="button" onClick={() => self.handleDelete(c)} className="btn btn-sm btn-outline-light">Удалить</button>
+                      </td>
+                    </tr>
+                  );
+                })
+              )}
+            </tbody>
+          </table>
+        </div>
+      </>
     );
   }
 }
