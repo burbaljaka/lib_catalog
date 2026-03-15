@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
 import KeyWordManager from './KeyWordAPI';
 
 const keyWordManager = new KeyWordManager();
@@ -30,9 +31,9 @@ class KeyWordCreateUpdate extends Component {
       "pk": pk,
       "name": this.state.name,
     }).then((result)=>{
-        alert("Ключевое слово отредактировано!");
+        toast.success("Ключевое слово отредактировано!");
       }).catch(()=>{
-        alert("Ошибка! Проверь форму!");
+        toast.error("Ошибка! Проверь форму!");
       });
   }
 
@@ -40,9 +41,9 @@ class KeyWordCreateUpdate extends Component {
     keyWordManager.createKeyWord({
       "name": this.state.name,
     }).then((result)=>{
-        alert("Ключевое слово создано!");
+        toast.success("Ключевое слово создано!");
       }).catch(()=>{
-        alert("Ошибка! Проверь форму!");
+        toast.error("Ошибка! Проверь форму!");
       });
   }
 

@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { BrowserRouter } from 'react-router-dom'
 import { Route } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
 import AuthorList from './AuthorList'
 import AuthorCreateUpdate from './AuthorCreateUpdate'
 import BookList from './BookList'
@@ -15,7 +16,8 @@ import BBKCreateUpdate from './BBKCreateUpdate'
 import KeyWordList from './KeyWordList'
 import KeyWordCreateUpdate from './KeyWordCreateUpdate'
 import './App.css'
-import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import 'react-toastify/dist/ReactToastify.css'
 
 const BaseLayout = () => (
   <div className="app">
@@ -68,6 +70,7 @@ class App extends Component {
     return (
       <BrowserRouter>
         <BaseLayout/>
+        <ToastContainer position="top-right" autoClose={3000} />
       </BrowserRouter>
     );
   }

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { toast } from 'react-toastify';
 import PubManager from './PubApi';
 
 const pubManager = new PubManager();
@@ -46,9 +47,9 @@ class PubCreateUpdate extends Component {
     pubManager.createPub({
       "name": this.state.name,
     }).then((result)=>{
-        alert("Издательство создано!");
+        toast.success("Издательство создано!");
       }).catch(()=>{
-        alert("Ошибка! Проверь форму!");
+        toast.error("Ошибка! Проверь форму!");
       });
   }
 
@@ -57,9 +58,9 @@ class PubCreateUpdate extends Component {
       "pk": pk,
       "name": this.state.name,
     }).then((result)=>{
-        alert("Издательство отредактировано!");
+        toast.success("Издательство отредактировано!");
       }).catch(()=>{
-        alert("Ошибка! Проверь форму!");
+        toast.error("Ошибка! Проверь форму!");
       });
   }
 

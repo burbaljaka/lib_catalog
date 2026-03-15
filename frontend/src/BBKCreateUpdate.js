@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
 import BBKManager from './BBKApi';
 
 const bbkManager = new BBKManager();
@@ -33,9 +34,9 @@ class BBKCreateUpdate extends Component {
       "code": this.state.code,
       "description": this.state.description,
     }).then((result)=>{
-        alert("Код отредактирован!");
+        toast.success("Код отредактирован!");
       }).catch(()=>{
-        alert("Ошибка! Проверь форму!");
+        toast.error("Ошибка! Проверь форму!");
       });
   }
 
@@ -44,9 +45,9 @@ class BBKCreateUpdate extends Component {
       "code": this.state.code,
       "description": this.state.description,
     }).then((result)=>{
-        alert("Код создан!");
+        toast.success("Код создан!");
       }).catch(()=>{
-        alert("Ошибка! Проверь форму!");
+        toast.error("Ошибка! Проверь форму!");
       });
   }
 

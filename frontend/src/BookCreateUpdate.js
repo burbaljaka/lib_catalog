@@ -10,6 +10,7 @@ import AuthorManager from './AuthorApi'
 
 import Select, { components } from "react-select";
 import Popup from "reactjs-popup";
+import { toast } from "react-toastify";
 
 
 const bookManager = new BookManager();
@@ -206,9 +207,9 @@ class BookCreateUpdate extends Component {
             "additional_data": this.state.currentBook.additional_data,
             "series": this.state.currentBook.series,
         }).then((result)=>{
-            alert("Книга отредактирована!");
+            toast.success("Книга отредактирована!");
         }).catch(()=>{
-            alert("Ошибка! Проверь форму!");
+            toast.error("Ошибка! Проверь форму!");
         });
     }
 
@@ -228,9 +229,9 @@ class BookCreateUpdate extends Component {
             "additional_data": this.state.currentBook.additional_data,
             "series": this.state.currentBook.series,
         }).then((result)=>{
-            alert("Книга создана!");
+            toast.success("Книга создана!");
         }).catch((err)=>{
-            alert(err.message);
+            toast.error(err?.response?.data?.detail || err?.message || "Ошибка! Проверь форму!");
         });
     }
 
@@ -260,17 +261,21 @@ class BookCreateUpdate extends Component {
         })
     }
 
-    handleAuthorCreate(e) {
-        console.log(this.state.authors);
+    handleAuthorCreate(e, close) {
+        if (e && e.preventDefault) e.preventDefault();
         authorManager.createAuthor({
             "fname": this.state.new_author.fname,
             "lname": this.state.new_author.lname,
             "author_code": this.state.new_author.author_code,
             "addition": this.state.new_author.addition
-        }).then(()=>authorManager.getAuthorsForDropdown().then(res=>{
-        this.setState({authors: res});
-        alert('Автор создан')
-    }))};
+        }).then(() => authorManager.getAuthorsForDropdown().then(res => {
+            this.setState({ authors: res });
+            toast.success('Автор создан');
+            if (close) close();
+        })).catch((err) => {
+            toast.error(err?.response?.data?.detail || err?.message || 'Ошибка при создании автора');
+        });
+    }
 
 
     handleBBKChange(e){
@@ -281,14 +286,18 @@ class BookCreateUpdate extends Component {
         })
     }
 
-    handleBBKCreate(e) {
+    handleBBKCreate(e, close) {
+        if (e && e.preventDefault) e.preventDefault();
         bbkManager.createBBK({
             "code": this.state.new_BBK.code,
             "description": this.state.new_BBK.description,
-        }).then(()=>{bbkManager.getBBKsForDropdown().then(res=> {
-            this.setState({bbk: res});
-            alert("Код создан")
-        })});
+        }).then(() => bbkManager.getBBKsForDropdown().then(res => {
+            this.setState({ bbk: res });
+            toast.success("Код создан");
+            if (close) close();
+        })).catch((err) => {
+            toast.error(err?.response?.data?.detail || err?.message || 'Ошибка при создании кода ББК');
+        });
     }
 
     handlePubChange(e){
@@ -299,14 +308,17 @@ class BookCreateUpdate extends Component {
         })
     }
 
-    handlePubCreate(e) {
+    handlePubCreate(e, close) {
+        if (e && e.preventDefault) e.preventDefault();
         pubManager.createPub({
             "name": this.state.new_pub.name,
-        }).then(()=>{pubManager.getPubsForDropdown().then(res=>{
-            this.setState({publishing_houses: res});
-            alert("Издательство создано")
-        })});
-
+        }).then(() => pubManager.getPubsForDropdown().then(res => {
+            this.setState({ publishing_houses: res });
+            toast.success("Издательство создано");
+            if (close) close();
+        })).catch((err) => {
+            toast.error(err?.response?.data?.detail || err?.message || 'Ошибка при создании издательства');
+        });
     }
 
     handleCityChange(e){
@@ -317,14 +329,17 @@ class BookCreateUpdate extends Component {
         })
     }
 
-    handleCityCreate(e) {
-        console.log(this.state.cities);
+    handleCityCreate(e, close) {
+        if (e && e.preventDefault) e.preventDefault();
         cityManager.createCity({
             "name": this.state.new_city.name,
-        }).then(()=>{cityManager.getCitiesForDropdown().then(res=> {
-            this.setState({cities: res});
-            alert("Город создан")
-        })});
+        }).then(() => cityManager.getCitiesForDropdown().then(res => {
+            this.setState({ cities: res });
+            toast.success("Город создан");
+            if (close) close();
+        })).catch((err) => {
+            toast.error(err?.response?.data?.detail || err?.message || 'Ошибка при создании города');
+        });
     }
 
     handleKeyWordChange(e){
@@ -335,14 +350,17 @@ class BookCreateUpdate extends Component {
         })
     }
 
-    handleKeyWordCreate(e) {
-        console.log(this.state.key_words);
+    handleKeyWordCreate(e, close) {
+        if (e && e.preventDefault) e.preventDefault();
         key_wordManager.createKeyWord({
             "name": this.state.new_key_word.name,
-        }).then(()=>{key_wordManager.getKeyWordsForDropdown().then(res=> {
-            this.setState({key_words: res});
-            alert("Слово создано")
-        })});
+        }).then(() => key_wordManager.getKeyWordsForDropdown().then(res => {
+            this.setState({ key_words: res });
+            toast.success("Слово создано");
+            if (close) close();
+        })).catch((err) => {
+            toast.error(err?.response?.data?.detail || err?.message || 'Ошибка при создании ключевого слова');
+        });
     }
 
 
@@ -475,7 +493,7 @@ class BookCreateUpdate extends Component {
                                                     type="submit"
                                                     form="BBKForm"
                                                     value="Сохранить"
-                                                    onClick={this.handleBBKCreate}
+                                                    onClick={(e) => this.handleBBKCreate(e, close)}
                                                 />
                                             </div>
                                             <div className ="col-4">
@@ -536,7 +554,7 @@ class BookCreateUpdate extends Component {
                                                     type="submit"
                                                     form="authorForm"
                                                     value="Сохранить"
-                                                    onClick={this.handleAuthorCreate}
+                                                    onClick={(e) => this.handleAuthorCreate(e, close)}
                                                 />
                                             </div>
                                             <div className ="col-4">
@@ -588,7 +606,7 @@ class BookCreateUpdate extends Component {
                                                     type="submit"
                                                     form="CityForm"
                                                     value="Сохранить"
-                                                    onClick={this.handleCityCreate}
+                                                    onClick={(e) => this.handleCityCreate(e, close)}
                                                 />
                                             </div>
                                             <div className ="col-4">
@@ -630,7 +648,7 @@ class BookCreateUpdate extends Component {
                                                     type="submit"
                                                     form="PubForm"
                                                     value="Сохранить"
-                                                    onClick={this.handlePubCreate}
+                                                    onClick={(e) => this.handlePubCreate(e, close)}
                                                 />
                                             </div>
                                             <div className ="col-4">
@@ -700,7 +718,7 @@ class BookCreateUpdate extends Component {
                                                     type="submit"
                                                     form="KeyWordForm"
                                                     value="Сохранить"
-                                                    onClick={this.handleKeyWordCreate}
+                                                    onClick={(e) => this.handleKeyWordCreate(e, close)}
                                                 />
                                             </div>
                                             <div className ="col-4">

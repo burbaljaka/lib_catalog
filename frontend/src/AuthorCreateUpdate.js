@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
 import AuthorManager from './AuthorApi';
 
 const authorManager = new AuthorManager();
@@ -39,9 +40,9 @@ class AuthorCreateUpdate extends Component {
       "author_code": this.state.author_code,
       "addition": this.state.addition,
     }).then((result)=>{
-        alert("Автор отредактирован!");
+        toast.success("Автор отредактирован!");
       }).catch(()=>{
-        alert("Ошибка! Проверь форму!");
+        toast.error("Ошибка! Проверь форму!");
       });
   }
 
@@ -52,9 +53,9 @@ class AuthorCreateUpdate extends Component {
       "author_code": this.state.author_code,
       "addition": this.state.addition,
     }).then((result)=>{
-        alert("Автор создан!");
+        toast.success("Автор создан!");
       }).catch(()=>{
-        alert("Ошибка! Проверь форму!");
+        toast.error("Ошибка! Проверь форму!");
       });
   }
 

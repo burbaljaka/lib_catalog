@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { toast } from 'react-toastify';
 import CityManager from './CityApi';
 
 const cityManager = new CityManager();
@@ -47,9 +48,9 @@ class CityCreateUpdate extends Component {
     cityManager.createCity({
       "name": this.state.name,
     }).then((result)=>{
-        alert("Город создан!");
+        toast.success("Город создан!");
       }).catch(()=>{
-        alert("Ошибка! Проверь форму!");
+        toast.error("Ошибка! Проверь форму!");
       });
   }
 
@@ -58,9 +59,9 @@ class CityCreateUpdate extends Component {
       "pk": pk,
       "name": this.state.name,
     }).then((result)=>{
-        alert("Город отредактирован!");
+        toast.success("Город отредактирован!");
       }).catch(()=>{
-        alert("Ошибка! Проверь форму!");
+        toast.error("Ошибка! Проверь форму!");
       });
   }
 

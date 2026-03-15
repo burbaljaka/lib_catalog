@@ -24,8 +24,7 @@ services:
             - NODE_ENV=development
         depends_on:
             - "web"
-        command:
-            npm start
+        command: sh -c "npm install && npx browserslist@latest --update-db && npm start"
 
     database:
         image: postgres
