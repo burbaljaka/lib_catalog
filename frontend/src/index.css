@@ -1,5 +1,6 @@
 :root {
-  --app-bg: #f4f5f5;
+  --app-bg: #fff9e6;
+  --app-bg-gradient: linear-gradient(135deg, #fff9e6 0%, #e8f5e9 50%, #e3f2fd 100%);
   --app-surface: #ffffff;
   --app-border: #e8e9ea;
   --app-text: #1a1d21;
@@ -22,11 +23,13 @@
 
 body {
   margin: 0;
+  min-height: 100vh;
   font-family: var(--app-font);
   font-size: 14px;
   line-height: 1.5;
   color: var(--app-text);
-  background: var(--app-bg);
+  background: var(--app-bg-gradient);
+  background-attachment: fixed;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -72,7 +75,7 @@ code {
 }
 
 .app .table tbody tr:hover {
-  background: #fafafa;
+  background: rgba(255, 255, 255, 0.7);
 }
 
 /* Buttons: accent primary, ghost secondary */
