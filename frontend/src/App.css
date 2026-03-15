@@ -170,7 +170,10 @@
   box-shadow: var(--app-shadow-md) !important;
   border: 1px solid var(--app-border) !important;
   padding: 20px !important;
-  max-width: 90vw;
+  width: 100%;
+  max-width: 1000px;
+  margin: 0 auto;
+  min-width: 280px;
 }
 
 .app .popup-content .form-group {

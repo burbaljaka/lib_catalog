@@ -159,3 +159,7 @@ _ReSharper*/
 .vs/
 #Nuget packages folder
 packages/
+node_modules
+/memory-bank
+/memory_bank
+/docs
