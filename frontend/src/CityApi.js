@@ -1,29 +1,33 @@
-import axios from 'axios'
+import axios from 'axios';
+import { toSnakeParams, toCamelResponse } from './utils/apiParams';
 
 const API_URL = 'http://localhost:8000/api/v1/lib/issue_city/';
 
 export default class CityManager {
-
-  getCities(){
-    return axios.get(API_URL).then((response) => response.data);
+  getCities(params = {}) {
+    const drfParams = toSnakeParams(params);
+    return axios.get(API_URL, { params: drfParams }).then((response) => toCamelResponse(response.data));
   }
 
-  getCity(city){
-    const url = API_URL + city + '/';
-    return axios.get(url).then((response) => response.data);
+  getCity(city) {
+    const id = typeof city === 'object' ? (city?.id ?? city?.pk) : city;
+    const url = API_URL + id + '/';
+    return axios.get(url).then((response) => toCamelResponse(response.data));
   }
 
-  createCity(city){
-    return axios.post(API_URL, city)
+  createCity(city) {
+    return axios.post(API_URL, city);
   }
 
-  updateCity(city){
-    const url = API_URL + city.pk + '/';
-    return axios.patch(url, city)
+  updateCity(city) {
+    const id = typeof city === 'object' ? (city?.id ?? city?.pk) : city;
+    const url = API_URL + id + '/';
+    return axios.patch(url, city);
   }
 
-  deleteCity(city){
-    const url = API_URL + city.pk + '/';
-    return axios.delete(url)
+  deleteCity(city) {
+    const id = typeof city === 'object' ? (city?.id ?? city?.pk) : city;
+    const url = API_URL + id + '/';
+    return axios.delete(url);
   }
 }

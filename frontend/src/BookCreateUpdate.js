@@ -147,19 +147,19 @@ class BookCreateUpdate extends Component {
 
     componentDidMount(){
         const self = this;
-        cityManager.getCities().then((result) => {
+        cityManager.getCitiesForDropdown().then((result) => {
             self.setState({cities: result});
         });
-        pubManager.getPubs().then((result) => {
+        pubManager.getPubsForDropdown().then((result) => {
             self.setState({publishing_houses: result});
         });
-        bbkManager.getBBKs().then((result) => {
+        bbkManager.getBBKsForDropdown().then((result) => {
             self.setState({bbk: result});
         });
-        key_wordManager.getKeyWords().then((result) => {
+        key_wordManager.getKeyWordsForDropdown().then((result) => {
             self.setState({key_words: result});
         });
-        authorManager.getAuthors().then((result) => {
+        authorManager.getAuthorsForDropdown().then((result) => {
             self.setState({authors: result});
         });
         const {match: {params}} = this.props;
@@ -170,19 +170,19 @@ class BookCreateUpdate extends Component {
                         name:a.name,
                         author:a.author,
                         description:a.description,
-                        author_sign: a.author_sign,
-                        issue_year: a.issue_year,
-                        issue_city: a.issue_city,
-                        publishing_house: a.publishing_house,
+                        author_sign: a.authorSign,
+                        issue_year: a.issueYear,
+                        issue_city: a.issueCity,
+                        publishing_house: a.publishingHouse,
                         bbk: a.bbk,
                         key_words: a.keywords,
                         place: a.place,
                         pages: a.pages,
-                        additional_data: a.additional_data,
+                        additional_data: a.additionalData,
                         series: a.series,
                     },
-                    issue_city: a.issue_city,
-                    publishing_house: a.publishing_house,
+                    issue_city: a.issueCity,
+                    publishing_house: a.publishingHouse,
                 })
             });
         }
@@ -267,7 +267,7 @@ class BookCreateUpdate extends Component {
             "lname": this.state.new_author.lname,
             "author_code": this.state.new_author.author_code,
             "addition": this.state.new_author.addition
-        }).then(()=>authorManager.getAuthors().then(res=>{
+        }).then(()=>authorManager.getAuthorsForDropdown().then(res=>{
         this.setState({authors: res});
         alert('Автор создан')
     }))};
@@ -285,7 +285,7 @@ class BookCreateUpdate extends Component {
         bbkManager.createBBK({
             "code": this.state.new_BBK.code,
             "description": this.state.new_BBK.description,
-        }).then(()=>{bbkManager.getBBKs().then(res=> {
+        }).then(()=>{bbkManager.getBBKsForDropdown().then(res=> {
             this.setState({bbk: res});
             alert("Код создан")
         })});
@@ -302,7 +302,7 @@ class BookCreateUpdate extends Component {
     handlePubCreate(e) {
         pubManager.createPub({
             "name": this.state.new_pub.name,
-        }).then(()=>{pubManager.getPubs().then(res=>{
+        }).then(()=>{pubManager.getPubsForDropdown().then(res=>{
             this.setState({publishing_houses: res});
             alert("Издательство создано")
         })});
@@ -321,7 +321,7 @@ class BookCreateUpdate extends Component {
         console.log(this.state.cities);
         cityManager.createCity({
             "name": this.state.new_city.name,
-        }).then(()=>{cityManager.getCities().then(res=> {
+        }).then(()=>{cityManager.getCitiesForDropdown().then(res=> {
             this.setState({cities: res});
             alert("Город создан")
         })});
@@ -339,7 +339,7 @@ class BookCreateUpdate extends Component {
         console.log(this.state.key_words);
         key_wordManager.createKeyWord({
             "name": this.state.new_key_word.name,
-        }).then(()=>{key_wordManager.getKeyWords().then(res=> {
+        }).then(()=>{key_wordManager.getKeyWordsForDropdown().then(res=> {
             this.setState({key_words: res});
             alert("Слово создано")
         })});
@@ -429,7 +429,7 @@ class BookCreateUpdate extends Component {
         if (this.state.currentBook.author_sign === []) {
             this.setState({
                 currentBook:{...this.state.currentBook,
-                            author_sign: just_authors[0].author_code
+                            author_sign: just_authors[0].authorCode
                         }
         })}
 

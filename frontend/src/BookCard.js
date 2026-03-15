@@ -46,15 +46,15 @@ class BookCard extends Component {
           name:a.name,
           bbk:a.bbk,
           authors:a.author,
-          author_sign: a.author_sign,
+          author_sign: a.authorSign,
           keywords: a.keywords,
           description: a.description,
           place: a.place,
-          additional_data: a.additional_data,
+          additional_data: a.additionalData,
           series: a.series,
-          issue_city: a.issue_city,
-          publishing_house: a.publishing_house,
-          issue_year: a.issue_year,
+          issue_city: a.issueCity,
+          publishing_house: a.publishingHouse,
+          issue_year: a.issueYear,
           pages: a.pages,
         })
       })
@@ -81,8 +81,8 @@ class BookCard extends Component {
             <tr>
               <td>Автор</td>
               <td>{this.state.author_sign} {(this.state.authors || []).map(function(a, index) {
-                if (index === 0) return <span key={a.id}>{a.short_name}</span>;
-                return <span key={a.id}>, {a.short_name}</span>;
+                if (index === 0) return <span key={a.id}>{a.shortName}</span>;
+                return <span key={a.id}>, {a.shortName}</span>;
               })}</td>
             </tr>
             <tr>

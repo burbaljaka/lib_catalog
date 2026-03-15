@@ -28,6 +28,7 @@ class BookViewSet(ModelViewSet):
     serializer_class = BookSerializer
     filterset_fields = ['bbk__code', 'author_sign', 'publishing_house__name']
     search_fields = ['author__lname', 'author__fname', 'name', 'issue_year', 'key_word__name']
+    ordering_fields = ['id', 'name', 'issue_year', 'author_sign']
 
     def perform_update(self, serializer):
         book = serializer.save()
@@ -126,6 +127,7 @@ class AuthorViewSet(ModelViewSet):
     queryset = Author.objects.all().order_by('lname')
     serializer_class = AuthorSerializer
     filterset_fields = ['lname']
+    ordering_fields = ['id', 'lname', 'fname', 'author_code']
 
     def create(self, request, *args, **kwargs):
         serializer = AuthorSerializer(data=request.data)
@@ -151,18 +153,22 @@ class AuthorViewSet(ModelViewSet):
 class PublishingHouseViewSet(ModelViewSet):
     queryset = PublishingHouse.objects.all().order_by('name')
     serializer_class = PublishingHouseSerializer
+    ordering_fields = ['id', 'name']
 
 
 class BBKViewSet(ModelViewSet):
     queryset = BBK.objects.all().order_by('code')
     serializer_class = BBKSerializer
+    ordering_fields = ['id', 'code', 'description']
 
 
 class KeyWordViewSet(ModelViewSet):
     queryset = KeyWord.objects.all()
     serializer_class = KeyWordSerializer
+    ordering_fields = ['id', 'name']
 
 
 class IssueCityViewSet(ModelViewSet):
     queryset = IssueCity.objects.all().order_by('name')
     serializer_class = IssueCitySerializer
+    ordering_fields = ['id', 'name']
