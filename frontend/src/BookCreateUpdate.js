@@ -621,7 +621,7 @@ class BookCreateUpdate extends Component {
                                 {close => (
                                     <div className="form-group">
 
-                                        <label>Город издательства</label>
+                                        <label>Издательство</label>
                                             <input onChange={this.handlePubChange} id="name" className="form-control" type="text" />
 
                                         <div className="row justify-content-center">
